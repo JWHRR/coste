@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>COSTE — Digital Experience Proposal · JWHR</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#08090e;
+  --bg2:#0d1018;
+  --bg3:#121724;
+  --cream:#efe9dc;
+  --cream2:#cfc8b8;
+  --muted:#8a8475;
+  --gold:#c8a86a;
+  --gold2:#d9bd83;
+  --goldbr:#ecd49a;
+  --goldgrad:linear-gradient(120deg,#ecd49a 0%,#c8a86a 45%,#a07d44 100%);
+  --blue:#1f4e79;
+  --blue2:#2e6fb0;
+  --line:rgba(200,168,106,.18);
+  --glow:0 0 60px rgba(200,168,106,.22);
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Jost",sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg)}
+body{font-family:var(--sans);color:var(--cream);-webkit-font-smoothing:antialiased}
+
+/* grain */
+body::after{content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ─── DECK ─── */
+.deck{width:100vw;height:100vh;position:relative}
+.slide{position:absolute;inset:0;display:flex;opacity:0;pointer-events:none;
+  transition:opacity .7s var(--ease),transform .7s var(--ease);
+  transform:translateX(60px)}
+.slide.active{opacity:1;pointer-events:auto;transform:none}
+.slide.out{opacity:0;transform:translateX(-60px)}
+
+/* ─── PROGRESS BAR ─── */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:1000;background:rgba(200,168,106,.12)}
+.progress__bar{height:100%;background:var(--goldgrad);transition:width .5s var(--ease)}
+
+/* ─── NAV ─── */
+.nav-dots{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:1000;display:flex;gap:.6rem}
+.nav-dots span{width:7px;height:7px;border-radius:50%;background:rgba(200,168,106,.3);cursor:pointer;transition:.3s}
+.nav-dots span.active{background:var(--gold);width:20px;border-radius:10px}
+.nav-arrows{position:fixed;bottom:1.8rem;right:2rem;z-index:1000;display:flex;gap:.6rem}
+.nav-arrows button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.03);
+  backdrop-filter:blur(10px);color:var(--gold);font-size:1.1rem;cursor:pointer;transition:.3s}
+.nav-arrows button:hover{background:var(--goldgrad);color:#1a130a;border-color:transparent}
+.slide-counter{position:fixed;bottom:2.1rem;left:2rem;z-index:1000;font-size:.72rem;letter-spacing:.2em;color:var(--muted)}
+
+/* ─── SHARED ELEMENTS ─── */
+.kicker{font-size:.68rem;font-weight:500;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:.7rem;margin-bottom:1.2rem}
+.kicker::before{content:"";width:24px;height:1px;background:var(--gold)}
+.gold-text{background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{display:inline-block;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;
+  padding:.35rem .9rem;border-radius:100px;border:1px solid var(--line);color:var(--gold2)}
+
+/* ambient glows behind each slide */
+.glow-tl{position:absolute;top:-10%;left:-10%;width:60%;height:60%;
+  background:radial-gradient(circle,rgba(46,111,176,.22),transparent 65%);pointer-events:none}
+.glow-br{position:absolute;bottom:-10%;right:-10%;width:60%;height:60%;
+  background:radial-gradient(circle,rgba(200,168,106,.14),transparent 65%);pointer-events:none}
+.glow-center{position:absolute;top:10%;left:20%;width:60%;height:60%;
+  background:radial-gradient(circle,rgba(200,168,106,.08),transparent 60%);pointer-events:none}
+
+/* ═══════════════════════════════════════════
+   SLIDE 1 — COVER
+   ═══════════════════════════════════════════ */
+.s1{background:var(--bg)}
+.s1__bg{position:absolute;inset:0;overflow:hidden}
+.s1__bg img{width:100%;height:100%;object-fit:cover;opacity:.28;filter:saturate(1.1)}
+.s1__bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,var(--bg) 0%,rgba(8,9,14,.3) 40%,rgba(8,9,14,.7) 75%,var(--bg) 100%),
+  radial-gradient(60% 50% at 50% 60%,rgba(200,168,106,.15),transparent)}
+.s1__content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;height:100%;text-align:center;padding:2rem}
+.s1__pre{font-size:.7rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;opacity:.85}
+.s1__brand{font-family:var(--serif);font-size:clamp(5rem,16vw,11rem);letter-spacing:.3em;padding-left:.3em;
+  line-height:1;background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 60px rgba(200,168,106,.3))}
+.s1__sub{font-family:var(--serif);font-size:clamp(1.2rem,3vw,2rem);font-style:italic;color:var(--cream2);margin-top:.6rem}
+.s1__divider{width:60px;height:1px;background:var(--goldgrad);margin:2.4rem auto}
+.s1__tagline{font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);max-width:480px;line-height:2}
+.s1__by{margin-top:3rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.s1__by span{color:var(--goldbr)}
+
+/* ═══════════════════════════════════════════
+   SLIDE 2 — THE PROBLEM
+   ═══════════════════════════════════════════ */
+.s2{background:var(--bg);align-items:center;justify-content:center;padding:0 8vw}
+.s2__inner{display:grid;grid-template-columns:1fr 1fr;gap:6vw;align-items:center;max-width:1200px;width:100%}
+.s2__left h2{font-family:var(--serif);font-size:clamp(2.6rem,5vw,4.4rem);line-height:1.04;margin-bottom:1.6rem}
+.s2__left p{color:var(--cream2);font-size:1.05rem;line-height:1.8;max-width:42ch}
+.s2__stats{display:flex;flex-direction:column;gap:1.4rem}
+.stat{padding:1.4rem 1.8rem;border-radius:16px;background:rgba(255,255,255,.025);
+  border:1px solid var(--line);position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--goldgrad);border-radius:2px}
+.stat__num{font-family:var(--serif);font-size:2.6rem;background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat__label{font-size:.82rem;color:var(--cream2);margin-top:.2rem}
+
+/* ═══════════════════════════════════════════
+   SLIDE 3 — THE SOLUTION OVERVIEW
+   ═══════════════════════════════════════════ */
+.s3{background:var(--bg);align-items:center;justify-content:center;padding:0 7vw}
+.s3__inner{max-width:1200px;width:100%}
+.s3__title{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4.2rem);margin-bottom:.6rem}
+.s3__sub{color:var(--cream2);font-size:1.05rem;margin-bottom:3rem;max-width:56ch}
+.s3__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.feat{padding:1.8rem;border-radius:16px;border:1px solid var(--line);
+  background:rgba(255,255,255,.02);backdrop-filter:blur(6px);
+  transition:border-color .3s,transform .3s}
+.feat:hover{border-color:var(--gold);transform:translateY(-4px)}
+.feat__icon{font-size:1.8rem;margin-bottom:1rem}
+.feat__title{font-family:var(--serif);font-size:1.4rem;color:var(--cream);margin-bottom:.5rem}
+.feat__desc{font-size:.88rem;color:var(--muted);line-height:1.7}
+
+/* ═══════════════════════════════════════════
+   SLIDE 4 — LIVE DEMO PREVIEW (screenshots)
+   ═══════════════════════════════════════════ */
+.s4{background:var(--bg);align-items:center;justify-content:center;padding:0 7vw}
+.s4__inner{max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 1.3fr;gap:5vw;align-items:center}
+.s4__text h2{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.8rem);margin-bottom:1.2rem}
+.s4__text p{color:var(--cream2);line-height:1.8;margin-bottom:2rem;max-width:40ch}
+.s4__list{list-style:none;display:flex;flex-direction:column;gap:.8rem}
+.s4__list li{display:flex;align-items:center;gap:.9rem;font-size:.9rem;color:var(--cream2)}
+.s4__list li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);
+  flex-shrink:0;box-shadow:0 0 10px var(--gold)}
+.s4__mockup{position:relative}
+.browser{border-radius:16px;overflow:hidden;border:1px solid var(--line);
+  box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(200,168,106,.1)}
+.browser__bar{background:#1a1d25;padding:.7rem 1rem;display:flex;align-items:center;gap:.5rem;border-bottom:1px solid var(--line)}
+.browser__dot{width:10px;height:10px;border-radius:50%}
+.browser__dot:nth-child(1){background:#ff5f57}
+.browser__dot:nth-child(2){background:#febc2e}
+.browser__dot:nth-child(3){background:#28c840}
+.browser__url{flex:1;background:rgba(255,255,255,.06);border-radius:100px;padding:.3rem 1rem;
+  font-size:.72rem;color:var(--muted);letter-spacing:.04em;margin-left:.8rem}
+.browser__screen{aspect-ratio:16/10;overflow:hidden;position:relative}
+.browser__screen img{width:100%;height:100%;object-fit:cover;object-position:top}
+.browser__screen::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(8,9,14,.8))}
+
+/* ═══════════════════════════════════════════
+   SLIDE 5 — RESERVATION SYSTEM
+   ═══════════════════════════════════════════ */
+.s5{background:var(--bg2);align-items:center;justify-content:center;padding:0 7vw}
+.s5__inner{max-width:1200px;width:100%;display:grid;grid-template-columns:1.2fr 1fr;gap:5vw;align-items:center}
+.s5__visual{position:relative}
+.phone-mock{width:260px;margin:0 auto;position:relative}
+.phone-mock__shell{background:#111318;border-radius:40px;padding:14px;
+  box-shadow:0 0 0 1px rgba(200,168,106,.25),0 50px 80px rgba(0,0,0,.6),var(--glow)}
+.phone-mock__screen{background:var(--bg3);border-radius:30px;overflow:hidden;aspect-ratio:9/19}
+.phone-mock__screen img{width:100%;height:100%;object-fit:cover}
+.phone-steps{position:absolute;right:-80px;top:10%;display:flex;flex-direction:column;gap:.8rem}
+.pstep{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;
+  padding:.7rem 1rem;font-size:.75rem;width:160px;color:var(--cream2)}
+.pstep span{display:block;color:var(--gold);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.2rem}
+.s5__text h2{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.8rem);margin-bottom:1.2rem}
+.s5__text p{color:var(--cream2);line-height:1.8;margin-bottom:2rem;max-width:40ch;font-size:.98rem}
+.s5__seats{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.seat-pill{padding:.8rem 1rem;border-radius:12px;border:1px solid var(--line);font-size:.82rem;
+  color:var(--cream2);display:flex;align-items:center;gap:.6rem}
+.seat-pill i{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.seat-pill.vip{border-color:var(--gold);color:var(--goldbr);background:rgba(200,168,106,.06)}
+
+/* ═══════════════════════════════════════════
+   SLIDE 6 — AI CONCIERGE
+   ═══════════════════════════════════════════ */
+.s6{background:var(--bg);align-items:center;justify-content:center;padding:0 7vw}
+.s6__inner{max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:center}
+.chat-mock{background:var(--bg3);border-radius:24px;overflow:hidden;
+  border:1px solid var(--line);box-shadow:0 40px 80px rgba(0,0,0,.5),var(--glow)}
+.chat-head{background:linear-gradient(135deg,var(--blue),#0d2a47);padding:1.1rem 1.3rem;
+  display:flex;align-items:center;gap:.8rem;border-bottom:1px solid rgba(200,168,106,.12)}
+.chat-av{width:38px;height:38px;border-radius:50%;background:var(--goldgrad);
+  color:#1a130a;font-family:var(--serif);font-size:1.1rem;display:grid;place-items:center}
+.chat-head strong{display:block;font-size:.9rem}
+.chat-head em{font-style:normal;font-size:.72rem;color:rgba(239,233,220,.6)}
+.chat-body{padding:1.2rem;display:flex;flex-direction:column;gap:.7rem;min-height:260px}
+.cb{max-width:80%;padding:.7rem 1rem;border-radius:14px;font-size:.82rem;line-height:1.5}
+.cb-bot{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);align-self:flex-start;border-bottom-left-radius:4px}
+.cb-user{background:var(--goldgrad);color:#1a130a;align-self:flex-end;border-bottom-right-radius:4px}
+.cb b{color:var(--goldbr)}
+.chat-chips{padding:.8rem 1.2rem;display:flex;flex-wrap:wrap;gap:.4rem;border-top:1px solid var(--line)}
+.chip{font-size:.72rem;padding:.35rem .8rem;border-radius:100px;border:1px solid rgba(200,168,106,.3);
+  color:var(--gold2);background:transparent}
+.s6__text h2{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.8rem);margin-bottom:1.2rem}
+.s6__text p{color:var(--cream2);line-height:1.8;margin-bottom:2rem;max-width:40ch;font-size:.98rem}
+.s6__points{list-style:none;display:flex;flex-direction:column;gap:.8rem}
+.s6__points li{display:flex;align-items:flex-start;gap:.9rem;font-size:.9rem;color:var(--cream2)}
+.s6__points li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:.35rem;flex-shrink:0}
+
+/* ═══════════════════════════════════════════
+   SLIDE 7 — TOURIST HUB (SEO engine)
+   ═══════════════════════════════════════════ */
+.s7{background:var(--bg);align-items:center;justify-content:center;padding:0 7vw}
+.s7__inner{max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:center}
+.s7__text h2{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.8rem);margin-bottom:1.2rem}
+.s7__text p{color:var(--cream2);line-height:1.8;margin-bottom:2rem;max-width:40ch;font-size:.98rem}
+.kw-cloud{display:flex;flex-wrap:wrap;gap:.6rem}
+.kw{padding:.5rem 1rem;border-radius:100px;font-size:.78rem;
+  border:1px solid var(--line);color:var(--cream2);transition:.3s}
+.kw.hot{background:rgba(200,168,106,.1);border-color:var(--gold);color:var(--goldbr)}
+.seo-cards{display:flex;flex-direction:column;gap:1rem}
+.seo-card{background:var(--bg3);border:1px solid var(--line);border-radius:14px;padding:1.2rem 1.4rem;
+  transition:border-color .3s}
+.seo-card:hover{border-color:var(--gold)}
+.seo-card__meta{font-size:.68rem;color:#27ae60;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.seo-card__title{font-size:1rem;color:var(--blue2);margin-bottom:.3rem;text-decoration:underline}
+.seo-card__url{font-size:.72rem;color:var(--muted)}
+.seo-card__desc{font-size:.82rem;color:var(--cream2);margin-top:.4rem}
+.seo-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;
+  padding:.3rem .8rem;border-radius:100px;background:rgba(39,174,96,.12);border:1px solid rgba(39,174,96,.3);
+  color:#27ae60;margin-bottom:1rem}
+
+/* ═══════════════════════════════════════════
+   SLIDE 8 — EVENTS + PHOTOS
+   ═══════════════════════════════════════════ */
+.s8{background:var(--bg);padding:0}
+.s8__bg{position:absolute;inset:0}
+.s8__bg img{width:100%;height:100%;object-fit:cover;opacity:.22;filter:saturate(1.1)}
+.s8__bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--bg) 40%,transparent 75%),
+  linear-gradient(180deg,var(--bg) 0%,transparent 20%,transparent 80%,var(--bg) 100%)}
+.s8__content{position:relative;z-index:2;display:flex;align-items:center;padding:0 8vw;height:100%}
+.s8__text{max-width:480px}
+.s8__text h2{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4.4rem);margin-bottom:1.2rem}
+.s8__text p{color:var(--cream2);line-height:1.8;margin-bottom:2.4rem;font-size:.98rem}
+.event-list{list-style:none;display:flex;flex-direction:column;gap:1rem}
+.event-list li{display:flex;align-items:center;gap:1.2rem}
+.event-list li .el-icon{width:46px;height:46px;border-radius:12px;background:rgba(200,168,106,.1);
+  border:1px solid var(--line);display:grid;place-items:center;font-size:1.2rem;flex-shrink:0}
+.event-list li .el-text strong{display:block;font-family:var(--serif);font-size:1.2rem;color:var(--cream)}
+.event-list li .el-text span{font-size:.8rem;color:var(--muted)}
+
+/* ═══════════════════════════════════════════
+   SLIDE 9 — YOUR PHOTOS (gallery)
+   ═══════════════════════════════════════════ */
+.s9{background:var(--bg);align-items:center;justify-content:center;padding:4vh 4vw}
+.s9__inner{max-width:1300px;width:100%}
+.s9__head{text-align:center;margin-bottom:2rem}
+.s9__head h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.4rem);margin-bottom:.5rem}
+.s9__head p{color:var(--muted);font-size:.9rem;letter-spacing:.1em}
+.photo-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(2,22vh);gap:.6rem}
+.pg{border-radius:12px;overflow:hidden;position:relative;border:1px solid rgba(200,168,106,.08)}
+.pg img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease),filter .6s}
+.pg:hover img{transform:scale(1.06);filter:saturate(1.2)}
+.pg::after{content:attr(data-label);position:absolute;inset:0;display:flex;align-items:flex-end;
+  padding:.7rem;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(239,233,220,.0);
+  background:linear-gradient(transparent,rgba(8,9,14,0));transition:.4s}
+.pg:hover::after{color:var(--gold);background:linear-gradient(transparent,rgba(8,9,14,.7))}
+.pg-a{grid-column:span 2;grid-row:span 2}
+.pg-b{grid-column:span 2}
+.pg-c{grid-column:span 2}
+.pg-d{grid-column:span 1}
+.pg-e{grid-column:span 1}
+.pg-f{grid-column:span 2}
+
+/* ═══════════════════════════════════════════
+   SLIDE 10 — ROI / BUSINESS CASE
+   ═══════════════════════════════════════════ */
+.s10{background:var(--bg2);align-items:center;justify-content:center;padding:0 7vw}
+.s10__inner{max-width:1200px;width:100%}
+.s10__top{display:grid;grid-template-columns:1fr 1fr;gap:3vw;margin-bottom:2.5rem;align-items:end}
+.s10__top h2{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,4rem)}
+.s10__top p{color:var(--cream2);line-height:1.8;font-size:.98rem}
+.roi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.roi-card{padding:1.8rem 1.4rem;border-radius:16px;border:1px solid var(--line);
+  background:rgba(255,255,255,.02);text-align:center;position:relative;overflow:hidden}
+.roi-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(200,168,106,.06),transparent 60%)}
+.roi-num{font-family:var(--serif);font-size:2.8rem;background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.roi-unit{font-size:.78rem;color:var(--gold);display:block;margin-bottom:.4rem}
+.roi-label{font-size:.82rem;color:var(--muted);margin-top:.5rem}
+.roi-equation{margin-top:2rem;padding:1.4rem 2rem;border-radius:16px;
+  background:linear-gradient(135deg,rgba(46,111,176,.15),rgba(200,168,106,.08));
+  border:1px solid rgba(200,168,106,.2);display:flex;align-items:center;justify-content:center;
+  gap:1.5rem;flex-wrap:wrap;font-family:var(--serif);font-size:1.4rem;color:var(--cream2)}
+.roi-equation .roi-op{color:var(--muted);font-family:var(--sans);font-size:1rem}
+.roi-equation strong{color:var(--gold);font-size:1.8rem}
+
+/* ═══════════════════════════════════════════
+   SLIDE 11 — PRICING
+   ═══════════════════════════════════════════ */
+.s11{background:var(--bg);align-items:center;justify-content:center;padding:0 6vw}
+.s11__inner{max-width:1200px;width:100%}
+.s11__title{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.8rem);margin-bottom:.5rem}
+.s11__sub{color:var(--cream2);margin-bottom:2.5rem;font-size:.98rem}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.plan{padding:2rem 1.8rem;border-radius:20px;border:1px solid var(--line);
+  background:rgba(255,255,255,.02);position:relative;transition:.3s}
+.plan--hero{border-color:var(--gold);background:rgba(200,168,106,.05);box-shadow:var(--glow)}
+.plan__badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--goldgrad);color:#1a130a;font-size:.65rem;letter-spacing:.2em;
+  text-transform:uppercase;padding:.35rem 1.1rem;border-radius:100px;white-space:nowrap}
+.plan__name{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.plan__price{font-family:var(--serif);font-size:3rem;color:var(--cream);margin-bottom:.2rem}
+.plan__price sub{font-size:1.2rem;color:var(--muted)}
+.plan__period{font-size:.8rem;color:var(--muted);margin-bottom:1.6rem}
+.plan__features{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.8rem}
+.plan__features li{font-size:.85rem;color:var(--cream2);display:flex;align-items:flex-start;gap:.7rem}
+.plan__features li::before{content:"✓";color:var(--gold);font-size:.8rem;margin-top:.1rem;flex-shrink:0}
+.plan__cta{width:100%;padding:.9rem;border-radius:100px;font-size:.75rem;letter-spacing:.18em;
+  text-transform:uppercase;transition:.4s;cursor:pointer;font-family:var(--sans)}
+.plan__cta--outline{background:transparent;border:1px solid var(--line);color:var(--cream2)}
+.plan__cta--outline:hover{border-color:var(--gold);color:var(--gold)}
+.plan__cta--gold{background:var(--goldgrad);border:none;color:#1a130a;box-shadow:0 0 30px rgba(200,168,106,.3)}
+.plan__cta--gold:hover{box-shadow:0 0 50px rgba(200,168,106,.5);transform:translateY(-2px)}
+
+/* ═══════════════════════════════════════════
+   SLIDE 12 — INTERNSHIP PROPOSAL
+   ═══════════════════════════════════════════ */
+.s12{background:var(--bg);padding:0}
+.s12__bg{position:absolute;inset:0}
+.s12__bg img{width:100%;height:100%;object-fit:cover;opacity:.18}
+.s12__bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 30%,var(--bg) 65%),
+  linear-gradient(180deg,var(--bg) 0%,transparent 15%,transparent 85%,var(--bg) 100%)}
+.s12__content{position:relative;z-index:2;display:flex;align-items:center;justify-content:flex-end;padding:0 8vw;height:100%}
+.s12__panel{max-width:540px}
+.s12__panel h2{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4.2rem);margin-bottom:1.2rem}
+.s12__panel p{color:var(--cream2);line-height:1.8;margin-bottom:2rem;font-size:.98rem}
+.prop-list{list-style:none;display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem}
+.prop-list li{display:flex;align-items:flex-start;gap:1rem;font-size:.92rem}
+.prop-list li .pl-num{font-family:var(--serif);font-size:1.4rem;color:var(--gold);line-height:1;flex-shrink:0;min-width:24px}
+.prop-list li .pl-text strong{display:block;color:var(--cream);margin-bottom:.1rem}
+.prop-list li .pl-text span{color:var(--muted);font-size:.85rem}
+.exchange-box{padding:1.4rem 1.8rem;border-radius:16px;background:rgba(200,168,106,.07);
+  border:1px solid rgba(200,168,106,.25)}
+.exchange-box p{font-size:.88rem;color:var(--cream2);margin-bottom:0}
+.exchange-box strong{color:var(--goldbr)}
+
+/* ═══════════════════════════════════════════
+   SLIDE 13 — CLOSING
+   ═══════════════════════════════════════════ */
+.s13{background:var(--bg)}
+.s13__bg{position:absolute;inset:0}
+.s13__bg img{width:100%;height:100%;object-fit:cover;opacity:.25;filter:saturate(1.1)}
+.s13__bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,var(--bg) 0%,rgba(8,9,14,.4) 40%,rgba(8,9,14,.65) 75%,var(--bg) 100%)}
+.s13__content{position:relative;z-index:2;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;height:100%;text-align:center;padding:2rem}
+.s13__brand{font-family:var(--serif);font-size:clamp(4rem,12vw,9rem);letter-spacing:.3em;padding-left:.3em;
+  background:var(--goldgrad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;
+  filter:drop-shadow(0 0 50px rgba(200,168,106,.3));margin-bottom:1rem}
+.s13__quote{font-family:var(--serif);font-size:clamp(1.2rem,2.5vw,2rem);font-style:italic;
+  color:var(--cream2);max-width:600px;line-height:1.4;margin-bottom:2.8rem}
+.s13__contact{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;margin-bottom:2rem}
+.contact-pill{display:flex;align-items:center;gap:.7rem;padding:.8rem 1.5rem;border-radius:100px;
+  border:1px solid var(--line);font-size:.82rem;color:var(--cream2);background:rgba(255,255,255,.02);
+  backdrop-filter:blur(10px)}
+.contact-pill i{color:var(--gold);font-size:1rem}
+.s13__link{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:1rem}
+.s13__link a{color:var(--gold);text-decoration:none}
+
+/* ─── SLIDE-IN ANIMATIONS ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.slide.active .kicker{animation:fadeUp .6s var(--ease) .1s both}
+.slide.active h2,.slide.active .s1__brand{animation:fadeUp .7s var(--ease) .2s both}
+.slide.active .s1__sub{animation:fadeUp .7s var(--ease) .35s both}
+.slide.active .s1__divider{animation:fadeUp .6s var(--ease) .45s both}
+.slide.active .s1__tagline,.slide.active .s1__by{animation:fadeUp .6s var(--ease) .55s both}
+.slide.active p{animation:fadeUp .7s var(--ease) .3s both}
+.slide.active .stat,.slide.active .feat,.slide.active .roi-card,.slide.active .plan{animation:fadeUp .6s var(--ease) calc(.2s + var(--i,0)*.1s) both}
+
+/* keyboard hint */
+.hint{position:fixed;top:1.4rem;right:2rem;z-index:1000;font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+.hint kbd{padding:.2rem .5rem;border-radius:4px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);font-family:var(--sans);font-size:.65rem}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress__bar" id="progressBar"></div></div>
+<div class="hint">Navigate <kbd>←</kbd><kbd>→</kbd> or click</div>
+<div class="slide-counter" id="counter">01 / 13</div>
+<div class="nav-dots" id="dots"></div>
+<div class="nav-arrows">
+  <button id="prevBtn" aria-label="Previous">←</button>
+  <button id="nextBtn" aria-label="Next">→</button>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ═══ SLIDE 1 — COVER ═══ -->
+<div class="slide active" data-slide="0">
+  <div class="s1__bg">
+    <img src="img/homepage.jpg" alt=""/>
+  </div>
+  <div class="s1__content s1">
+    <p class="s1__pre">Digital Experience Proposal · 2025</p>
+    <div class="s1__brand">COSTE</div>
+    <div class="s1__sub">A Mediterranean Escape in Sidi Bou Said</div>
+    <div class="s1__divider"></div>
+    <div class="s1__tagline">
+      Reservation Engine &nbsp;·&nbsp; Tourist Destination &nbsp;·&nbsp; Event Platform<br/>
+      Loyalty Programme &nbsp;·&nbsp; AI Concierge &nbsp;·&nbsp; Brand
+    </div>
+    <div class="s1__by">Conceived &amp; built by &nbsp;<span>JWHR</span></div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 2 — THE OPPORTUNITY ═══ -->
+<div class="slide" data-slide="1">
+  <div class="glow-tl"></div>
+  <div class="glow-br"></div>
+  <div class="s2">
+    <div class="s2__inner">
+      <div class="s2__left">
+        <div class="kicker">The Opportunity</div>
+        <h2>COSTE deserves a <span class="gold-text">stage equal</span> to its ambition.</h2>
+        <p>Tourists are searching for exactly what COSTE offers — right now, on Google. Without a premium digital presence, that demand goes to competitors who are less special but more visible.</p>
+      </div>
+      <div class="s2__stats">
+        <div class="stat" style="--i:0">
+          <div class="stat__num">2.4M</div>
+          <div class="stat__label">Tourists visited Tunisia in 2024 — and growing every year.</div>
+        </div>
+        <div class="stat" style="--i:1">
+          <div class="stat__num">78%</div>
+          <div class="stat__label">Search for restaurants and experiences online before they arrive.</div>
+        </div>
+        <div class="stat" style="--i:2">
+          <div class="stat__num">#1</div>
+          <div class="stat__label">Position COSTE could own for "best restaurant Sidi Bou Said" on Google.</div>
+        </div>
+        <div class="stat" style="--i:3">
+          <div class="stat__num">0%</div>
+          <div class="stat__label">Commission on every reservation made through your own website.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 3 — THE SOLUTION ═══ -->
+<div class="slide" data-slide="2">
+  <div class="glow-center"></div>
+  <div class="s3">
+    <div class="s3__inner">
+      <div class="kicker">The Solution</div>
+      <h2 class="s3__title">Not a website.<br/><span class="gold-text">A growth engine.</span></h2>
+      <p class="s3__sub">Six integrated systems, one seamless experience — built specifically for COSTE, inspired by Soho House, Aman and Four Seasons.</p>
+      <div class="s3__grid">
+        <div class="feat" style="--i:0"><div class="feat__icon">🌅</div><div class="feat__title">Live Reservations</div><div class="feat__desc">Terrace, sunset & VIP tables booked 24/7, confirmed instantly on WhatsApp. Zero commission.</div></div>
+        <div class="feat" style="--i:1"><div class="feat__icon">🤖</div><div class="feat__title">AI Concierge</div><div class="feat__desc">Answers guests around the clock — hours, menus, events, directions — then hands off to WhatsApp.</div></div>
+        <div class="feat" style="--i:2"><div class="feat__icon">🗺️</div><div class="feat__title">Tourist Hub</div><div class="feat__desc">A Sidi Bou Said guide that ranks on Google — turning tourist searches into COSTE reservations.</div></div>
+        <div class="feat" style="--i:3"><div class="feat__icon">🎉</div><div class="feat__title">Events Platform</div><div class="feat__desc">Sell Sunset Sessions, Grand Brunch, live nights and full private buyouts with one click.</div></div>
+        <div class="feat" style="--i:4"><div class="feat__icon">♟️</div><div class="feat__title">White Club</div><div class="feat__desc">Priority reservations, VIP access, rewards, birthday rituals — your loyalty engine.</div></div>
+        <div class="feat" style="--i:5"><div class="feat__icon">💼</div><div class="feat__title">B2B Catering</div><div class="feat__desc">Corporate catering and event leads captured directly — high-ticket, zero intermediary.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 4 — LIVE DEMO ═══ -->
+<div class="slide" data-slide="3">
+  <div class="glow-tl"></div>
+  <div class="s4">
+    <div class="s4__inner">
+      <div class="s4__text">
+        <div class="kicker">Live Demo</div>
+        <h2>It's not a concept.<br/><span class="gold-text">It's already built.</span></h2>
+        <p>Designed with your own photos, your brand palette, your story — live and accessible from any device, anywhere in the world, right now.</p>
+        <ul class="s4__list">
+          <li>Fully responsive — mobile, tablet, desktop</li>
+          <li>Loads in under 2 seconds</li>
+          <li>No monthly platform fee — hosted for free</li>
+          <li>Your real COSTE photography throughout</li>
+          <li>Immediate WhatsApp integration — no setup needed</li>
+        </ul>
+      </div>
+      <div class="s4__mockup">
+        <div class="browser">
+          <div class="browser__bar">
+            <div class="browser__dot"></div>
+            <div class="browser__dot"></div>
+            <div class="browser__dot"></div>
+            <div class="browser__url">jwhrr.github.io/coste</div>
+          </div>
+          <div class="browser__screen">
+            <img src="img/homepage.jpg" alt="COSTE website preview"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 5 — RESERVATION ═══ -->
+<div class="slide" data-slide="4">
+  <div class="glow-br"></div>
+  <div class="s5">
+    <div class="s5__inner">
+      <div class="s5__visual">
+        <div class="phone-mock">
+          <div class="phone-mock__shell">
+            <div class="phone-mock__screen">
+              <img src="img/2.jpg" alt=""/>
+            </div>
+          </div>
+        </div>
+        <div class="phone-steps">
+          <div class="pstep"><span>Step 01</span>Choose your seat</div>
+          <div class="pstep"><span>Step 02</span>Date, time, guests</div>
+          <div class="pstep"><span>Step 03</span>Confirm on WhatsApp</div>
+        </div>
+      </div>
+      <div class="s5__text">
+        <div class="kicker">Live Reservation System</div>
+        <h2>A table, chosen <span class="gold-text">before they arrive.</span></h2>
+        <p>Guests select their exact experience — not just a generic booking. The reservation lands straight in your WhatsApp inbox, pre-formatted, ready to confirm.</p>
+        <div class="s5__seats">
+          <div class="seat-pill"><i></i>Terrace</div>
+          <div class="seat-pill"><i></i>Sunset Table</div>
+          <div class="seat-pill"><i></i>Indoor</div>
+          <div class="seat-pill vip"><i></i>VIP Table ✦</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 6 — AI CONCIERGE ═══ -->
+<div class="slide" data-slide="5">
+  <div class="glow-tl"></div>
+  <div class="s6">
+    <div class="s6__inner">
+      <div class="s6__text">
+        <div class="kicker">AI WhatsApp Concierge</div>
+        <h2>Your best<br/><span class="gold-text">team member</span><br/>never sleeps.</h2>
+        <p>Instant replies to every question, in any language, at 3am on a Sunday. Every conversation ends with a WhatsApp handoff — to you or your team.</p>
+        <ul class="s6__points">
+          <li>Handles reservations, hours, menu, directions</li>
+          <li>Routes private event enquiries to the right person</li>
+          <li>Speaks French, English and Arabic</li>
+          <li>Pre-fills WhatsApp messages automatically</li>
+        </ul>
+      </div>
+      <div class="chat-mock">
+        <div class="chat-head">
+          <div class="chat-av">C</div>
+          <div><strong>COSTE Concierge</strong><em>Online · replies instantly</em></div>
+        </div>
+        <div class="chat-body">
+          <div class="cb cb-bot">Welcome to COSTE 🌅 How can I help you today?</div>
+          <div class="cb cb-user">Do you have a sunset table available Friday?</div>
+          <div class="cb cb-bot">Golden hour is magical here 🌇 Our Sunset Tables are most requested — arrive by <b>19:00</b> for the full show. Shall I open the reservation for you?</div>
+          <div class="cb cb-user">Yes please, table for 2</div>
+          <div class="cb cb-bot">Perfect. I'll connect you with our team on WhatsApp to confirm your table right now. ✨</div>
+        </div>
+        <div class="chat-chips">
+          <div class="chip">Reserve a table</div>
+          <div class="chip">Opening hours</div>
+          <div class="chip">Private event</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7 — TOURIST HUB / SEO ═══ -->
+<div class="slide" data-slide="6">
+  <div class="glow-br"></div>
+  <div class="s7">
+    <div class="s7__inner">
+      <div class="s7__text">
+        <div class="kicker">Tourist Experience Hub</div>
+        <h2>Own <span class="gold-text">Sidi Bou Said</span><br/>on Google.</h2>
+        <p>The Tourist Hub turns COSTE into a destination guide — so when a traveller searches for Sidi Bou Said, they find COSTE first. That's how your website becomes a reservation engine for tourists who haven't even heard of you yet.</p>
+        <div class="kw-cloud" style="margin-top:1.4rem">
+          <div class="kw hot">best café Sidi Bou Said</div>
+          <div class="kw hot">brunch Tunisie</div>
+          <div class="kw">things to do Sidi Bou Said</div>
+          <div class="kw hot">restaurant sunset Tunisia</div>
+          <div class="kw">where to eat Sidi Bou Said</div>
+          <div class="kw">Sidi Bou Said guide</div>
+        </div>
+      </div>
+      <div>
+        <div class="seo-badge">📈 Google Search Preview</div>
+        <div class="seo-cards">
+          <div class="seo-card">
+            <div class="seo-card__meta">coste-sidibousaid.com › discover</div>
+            <div class="seo-card__title">Best Café in Sidi Bou Said — COSTE Restaurant &amp; Brunch</div>
+            <div class="seo-card__desc">Mediterranean luxury café in Sidi Bou Said · Sunset terraces · Slow brunch · Reserve a table. A complete guide to Sidi Bou Said's finest spots.</div>
+          </div>
+          <div class="seo-card">
+            <div class="seo-card__meta">coste-sidibousaid.com › discover</div>
+            <div class="seo-card__title">Things to do in Sidi Bou Said — Photo spots, hidden gems</div>
+            <div class="seo-card__desc">COSTE's curated guide to Sidi Bou Said: the blue door, the bay lookout, best sunset timing, where to eat and what to explore.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 8 — EVENTS ═══ -->
+<div class="slide" data-slide="7">
+  <div class="s8__bg">
+    <img src="img/6.jpg" alt=""/>
+  </div>
+  <div class="s8__content s8">
+    <div class="s8__text">
+      <div class="kicker">Events Platform</div>
+      <h2>Sell the <span class="gold-text">night itself.</span></h2>
+      <p>Every event has its own page, its own booking flow, and its own lead form — turning an empty Tuesday into a sold-out evening.</p>
+      <ul class="event-list">
+        <li>
+          <div class="el-icon">🌅</div>
+          <div class="el-text"><strong>Sunset Sessions</strong><span>Every Friday · resident selector · ticketed entry</span></div>
+        </li>
+        <li>
+          <div class="el-icon">🍽️</div>
+          <div class="el-text"><strong>The Grand Brunch</strong><span>Weekends · bottomless Mediterranean table · live acoustic</span></div>
+        </li>
+        <li>
+          <div class="el-icon">🎵</div>
+          <div class="el-text"><strong>Live Under the Stars</strong><span>Monthly · upper terrace · intimate performance</span></div>
+        </li>
+        <li>
+          <div class="el-icon">🥂</div>
+          <div class="el-text"><strong>Private Buyouts</strong><span>Weddings, brands, birthdays · full venue · bespoke</span></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 9 — YOUR PHOTOS ═══ -->
+<div class="slide" data-slide="8">
+  <div class="glow-center"></div>
+  <div class="s9">
+    <div class="s9__inner">
+      <div class="s9__head">
+        <div class="kicker" style="justify-content:center">Your Photography</div>
+        <h2>Every image is <span class="gold-text">real COSTE.</span></h2>
+        <p>No stock photography. Your own kitchen, your own cocktails, your own soul.</p>
+      </div>
+      <div class="photo-grid">
+        <div class="pg pg-a" data-label="The brunch table"><img src="img/homepage.jpg" alt=""/></div>
+        <div class="pg pg-b" data-label="Tunisian feast"><img src="img/6.jpg" alt=""/></div>
+        <div class="pg pg-c" data-label="The mint cooler"><img src="img/1.jpg" alt=""/></div>
+        <div class="pg pg-d" data-label="Blue cocktail"><img src="img/2.jpg" alt=""/></div>
+        <div class="pg pg-e" data-label="Signature dessert"><img src="img/3.jpg" alt=""/></div>
+        <div class="pg pg-f" data-label="Golden sundaes"><img src="img/5.jpg" alt=""/></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 10 — ROI ═══ -->
+<div class="slide" data-slide="9">
+  <div class="glow-tl"></div>
+  <div class="s10">
+    <div class="s10__inner">
+      <div class="s10__top">
+        <div>
+          <div class="kicker">The Business Case</div>
+          <h2>It pays for itself<br/><span class="gold-text">with one booking.</span></h2>
+        </div>
+        <p>This isn't a cost — it's infrastructure. Every feature is designed to generate revenue directly, with zero commission to third parties.</p>
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card" style="--i:0">
+          <div class="roi-unit">per private event</div>
+          <div class="roi-num">5K+</div>
+          <div class="roi-label">Average revenue from one privatisation lead captured online</div>
+        </div>
+        <div class="roi-card" style="--i:1">
+          <div class="roi-unit">tourist reservations/week</div>
+          <div class="roi-num">×4</div>
+          <div class="roi-label">Projected increase from organic Google tourist traffic</div>
+        </div>
+        <div class="roi-card" style="--i:2">
+          <div class="roi-unit">commission saved</div>
+          <div class="roi-num">0%</div>
+          <div class="roi-label">Every booking goes direct to WhatsApp — no Zomato, no middleman</div>
+        </div>
+        <div class="roi-card" style="--i:3">
+          <div class="roi-unit">hours per night</div>
+          <div class="roi-num">24</div>
+          <div class="roi-label">The site and concierge work while the team sleeps</div>
+        </div>
+      </div>
+      <div class="roi-equation">
+        <span>1 private event/month</span>
+        <span class="roi-op">=</span>
+        <strong>5 000 TND</strong>
+        <span class="roi-op">≥</span>
+        <span>full annual website cost</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 11 — PRICING ═══ -->
+<div class="slide" data-slide="10">
+  <div class="glow-br"></div>
+  <div class="s11">
+    <div class="s11__inner">
+      <div class="kicker">The Offer</div>
+      <h2 class="s11__title">Choose your <span class="gold-text">partnership.</span></h2>
+      <p class="s11__sub">Three paths — all starting from a product that already exists and already works.</p>
+      <div class="plans">
+        <div class="plan" style="--i:0">
+          <div class="plan__name">Project</div>
+          <div class="plan__price">2 500<sub> TND</sub></div>
+          <div class="plan__period">One-time · full handover</div>
+          <ul class="plan__features">
+            <li>Complete website, fully built</li>
+            <li>Your photos integrated</li>
+            <li>Reservation + concierge system</li>
+            <li>Domain + hosting setup</li>
+            <li>Team training session</li>
+            <li>1 month WhatsApp support</li>
+          </ul>
+          <button class="plan__cta plan__cta--outline">Start Here</button>
+        </div>
+
+        <div class="plan plan--hero" style="--i:1">
+          <div class="plan__badge">Recommended</div>
+          <div class="plan__name">Partnership</div>
+          <div class="plan__price">1 500<sub> TND/mo</sub></div>
+          <div class="plan__period">3-month minimum · full collaboration</div>
+          <ul class="plan__features">
+            <li>Everything in Project</li>
+            <li>Monthly content updates</li>
+            <li>SEO articles — tourist hub</li>
+            <li>Event page management</li>
+            <li>Performance reports</li>
+            <li>Priority feature development</li>
+          </ul>
+          <button class="plan__cta plan__cta--gold">Let's Build This</button>
+        </div>
+
+        <div class="plan" style="--i:2">
+          <div class="plan__name">Internship</div>
+          <div class="plan__price">1 mo<sub>nth</sub></div>
+          <div class="plan__period">Meals on-site · Digital Partner credit</div>
+          <ul class="plan__features">
+            <li>Present at COSTE daily</li>
+            <li>Finalise site from the inside</li>
+            <li>Produce missing photography</li>
+            <li>Write all SEO content</li>
+            <li>Train the team live</li>
+            <li>Live the experience · tell it better</li>
+          </ul>
+          <button class="plan__cta plan__cta--outline">Discuss</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 12 — INTERNSHIP ═══ -->
+<div class="slide" data-slide="11">
+  <div class="s12__bg">
+    <img src="img/5.jpg" alt=""/>
+  </div>
+  <div class="s12__content s12">
+    <div class="s12__panel">
+      <div class="kicker">The Internship Proposal</div>
+      <h2>Let me live <span class="gold-text">COSTE</span><br/>to tell it better.</h2>
+      <p>The best digital experiences are built from the inside — by someone who has felt the atmosphere, tasted the food, watched the sunset from the terrace. I'd like to be that person for COSTE.</p>
+      <ul class="prop-list">
+        <li>
+          <div class="pl-num">01</div>
+          <div class="pl-text"><strong>One month on-site</strong><span>Present daily — understanding how COSTE works at every hour.</span></div>
+        </li>
+        <li>
+          <div class="pl-num">02</div>
+          <div class="pl-text"><strong>Finalise the website in real time</strong><span>Every detail refined as I experience it — copy, photos, feel.</span></div>
+        </li>
+        <li>
+          <div class="pl-num">03</div>
+          <div class="pl-text"><strong>Produce the missing content</strong><span>Photo direction, video reel concepts, SEO articles for the tourist hub.</span></div>
+        </li>
+        <li>
+          <div class="pl-num">04</div>
+          <div class="pl-text"><strong>Train the team</strong><span>How to handle WhatsApp reservations, update events, manage leads.</span></div>
+        </li>
+      </ul>
+      <div class="exchange-box">
+        <p>In exchange — <strong>meals on-site</strong> and an official <strong>"Digital Partner — COSTE"</strong> credit. No salary required. Pure investment in both of our reputations.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 13 — CLOSING ═══ -->
+<div class="slide" data-slide="12">
+  <div class="s13__bg">
+    <img src="img/3.jpg" alt=""/>
+  </div>
+  <div class="s13__content s13">
+    <div class="s13__brand">COSTE</div>
+    <div class="s13__quote">"Make COSTE the most recognised café brand in Tunisia — and the most beautiful digital experience in the Mediterranean."</div>
+    <div class="s13__contact">
+      <div class="contact-pill"><i>✉</i> jawhersa999@gmail.com</div>
+      <div class="contact-pill"><i>⬡</i> jwhrr.github.io/coste</div>
+    </div>
+    <div class="s13__link">Built by &nbsp;<a href="mailto:jawhersa999@gmail.com">JWHR</a>&nbsp; · 2025</div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsEl  = document.getElementById('dots');
+const bar     = document.getElementById('progressBar');
+const counter = document.getElementById('counter');
+const total   = slides.length;
+let cur = 0;
+
+// build dots
+slides.forEach((_,i)=>{
+  const d = document.createElement('span');
+  if(i===0) d.classList.add('active');
+  d.addEventListener('click',()=>go(i));
+  dotsEl.appendChild(d);
+});
+
+function go(n){
+  if(n<0||n>=total) return;
+  slides[cur].classList.remove('active');
+  slides[cur].classList.add('out');
+  setTimeout(()=>slides[cur].classList.remove('out'), 700);
+  cur = n;
+  slides[cur].classList.add('active');
+  dotsEl.querySelectorAll('span').forEach((d,i)=>d.classList.toggle('active',i===cur));
+  bar.style.width = ((cur+1)/total*100)+'%';
+  counter.textContent = String(cur+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+}
+
+document.getElementById('prevBtn').addEventListener('click',()=>go(cur-1));
+document.getElementById('nextBtn').addEventListener('click',()=>go(cur+1));
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ') go(cur+1);
+  if(e.key==='ArrowLeft') go(cur-1);
+});
+
+// touch swipe
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50) dx<0?go(cur+1):go(cur-1);
+},{passive:true});
+
+// init bar
+bar.style.width = (1/total*100)+'%';
+</script>
+</body>
+</html>
