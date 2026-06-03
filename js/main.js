@@ -6,7 +6,7 @@
 
   /* ---- CONFIG ---------------------------------------------------- */
   // Replace with the venue's real WhatsApp number (international, digits only)
-  const WHATSAPP_NUMBER = "21600000000";
+  const WHATSAPP_NUMBER = "21620785018";
 
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
