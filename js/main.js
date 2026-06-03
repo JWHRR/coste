@@ -239,6 +239,35 @@ Phone: ${f.get("phone")}`;
   });
 
   /* ================================================================
+     EVENT BOOKING MODAL
+     ================================================================ */
+  $$("[data-open-event]").forEach(b => b.addEventListener("click", () => {
+    const eventName = b.dataset.openEvent;
+    $("#eventKicker").textContent = "Réservation";
+    $("#eventTitle").textContent = eventName.split("—")[0].trim();
+    $("#eventSubtitle").textContent = eventName.split("—").slice(1).join("·").trim();
+    $("#eventNameInput").value = eventName;
+    $("#eventForm").reset();
+    $(".leadform__status", $("#eventForm")).textContent = "";
+    openModal("eventModal");
+  }));
+
+  $("#eventForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const msg =
+`Réservation — ${f.get("eventName")}
+
+Nom: ${f.get("name")}
+Email: ${f.get("email")}
+Téléphone: ${f.get("phone")}
+Nombre de places: ${f.get("guests")}${f.get("details") ? "\nMessage: " + f.get("details") : ""}`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+    $(".leadform__status", e.target).textContent = "Merci ! Confirmez sur WhatsApp pour finaliser. ✨";
+    e.target.reset();
+  });
+
+  /* ================================================================
      LEAD MODALS (events / creators / club)
      ================================================================ */
   $$("[data-open-lead]").forEach(b => b.addEventListener("click", () => {
