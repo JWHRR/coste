@@ -12,6 +12,107 @@
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
 
   /* ================================================================
+     LANGUAGE SWITCHER  (EN / FR / AR)
+     ================================================================ */
+  const LANGS = {
+    en: {
+      "nav-experience":"Experience","nav-menu":"Menu","nav-discover":"Discover",
+      "nav-events":"Events","nav-club":"Coste Club","nav-reserve":"Reserve",
+      "nav-creators":"Creators","nav-catering":"Catering",
+      "hero-eyebrow":"Sidi Bou Said · Tunisia",
+      "hero-t1":"A Mediterranean","hero-em":"escape","hero-t2":", above the blue.",
+      "hero-lede":"Slow mornings, sunlit brunches, and golden-hour terraces where the sea meets the Costewashed hills. This is COSTE.",
+      "btn-reserve-hero":"Reserve a Table","btn-discover-hero":"Discover the House",
+      "hero-scroll":"Scroll",
+      "manifesto-kicker":"The House",
+      "manifesto-title":`<span class="reveal-word">Some</span> <span class="reveal-word">places</span> <span class="reveal-word">you</span> <span class="reveal-word">visit.</span> <span class="reveal-word manifesto__accent">COSTE</span> <span class="reveal-word manifesto__accent">you</span> <span class="reveal-word manifesto__accent">remember.</span>`,
+      "manifesto-body":"Perched among the cobalt doors and bougainvillea of Sidi Bou Said, COSTE is a house for unhurried hours — where Mediterranean cooking, curated sound, and the slow theatre of sunset become a way of living.",
+      "exp-kicker":"The Experience","exp-title":"Four ways to live<br/>a day at COSTE",
+      "atmos-kicker":"Sidi Bou Said","atmos-title":"Blue doors,<br/>Coste walls,<br/>endless sea.",
+      "atmos-body":"We didn't choose the most beautiful village in the Mediterranean by accident. Every detail at COSTE answers to it — the cobalt, the lime-washed stone, the jasmine in the evening air.",
+      "atmos-li1":"A terrace built around the sunset line",
+      "atmos-li2":"Mediterranean kitchen, Tunisian soul",
+      "atmos-li3":"Sound curated from afternoon to midnight",
+      "menu-kicker":"The Kitchen","menu-title":"Signature plates &amp;<br/>house pours",
+      "events-kicker":"Events at COSTE","events-title":"Pick your<br/>experience",
+      "footer-cta-title":"Your table is<br/>waiting.","footer-reserve":"Reserve at COSTE"
+    },
+    fr: {
+      "nav-experience":"Expérience","nav-menu":"Menu","nav-discover":"Découvrir",
+      "nav-events":"Événements","nav-club":"Coste Club","nav-reserve":"Réserver",
+      "nav-creators":"Créateurs","nav-catering":"Traiteur",
+      "hero-eyebrow":"Sidi Bou Said · Tunisie",
+      "hero-t1":"Une escapade","hero-em":"méditerranéenne","hero-t2":", au-dessus du bleu.",
+      "hero-lede":"Matins doux, brunchs ensoleillés et terrasses crépusculaires où la mer rejoint les collines de Coste. Voici COSTE.",
+      "btn-reserve-hero":"Réserver une Table","btn-discover-hero":"Découvrir la Maison",
+      "hero-scroll":"Défiler",
+      "manifesto-kicker":"La Maison",
+      "manifesto-title":`<span class="reveal-word">Certains</span> <span class="reveal-word">endroits</span> <span class="reveal-word">se</span> <span class="reveal-word">visitent.</span> <span class="reveal-word manifesto__accent">COSTE</span> <span class="reveal-word manifesto__accent">se</span> <span class="reveal-word manifesto__accent">souvient.</span>`,
+      "manifesto-body":"Perché parmi les portes cobalt et les bougainvillées de Sidi Bou Said, COSTE est une maison faite pour les heures sans hâte — où cuisine méditerranéenne, son curé et le lent théâtre du coucher de soleil deviennent un art de vivre.",
+      "exp-kicker":"L'Expérience","exp-title":"Quatre façons de vivre<br/>une journée à COSTE",
+      "atmos-kicker":"Sidi Bou Said","atmos-title":"Portes bleues,<br/>murs Coste,<br/>mer infinie.",
+      "atmos-body":"Ce n'est pas par hasard que nous avons choisi le plus beau village de la Méditerranée. Chaque détail de COSTE lui répond — le cobalt, la pierre chaulée, le jasmin dans l'air du soir.",
+      "atmos-li1":"Une terrasse bâtie autour de la ligne du coucher de soleil",
+      "atmos-li2":"Cuisine méditerranéenne, âme tunisienne",
+      "atmos-li3":"Sonorités curées de l'après-midi à minuit",
+      "menu-kicker":"La Cuisine","menu-title":"Plats signatures &amp;<br/>boissons maison",
+      "events-kicker":"Événements à COSTE","events-title":"Choisissez votre<br/>expérience",
+      "footer-cta-title":"Votre table vous<br/>attend.","footer-reserve":"Réserver à COSTE"
+    },
+    ar: {
+      "nav-experience":"تجربة","nav-menu":"القائمة","nav-discover":"اكتشف",
+      "nav-events":"الفعاليات","nav-club":"نادي كوست","nav-reserve":"احجز",
+      "nav-creators":"المبدعون","nav-catering":"الضيافة",
+      "hero-eyebrow":"سيدي بو سعيد · تونس",
+      "hero-t1":"هروب","hero-em":"متوسطي","hero-t2":"، فوق الأزرق.",
+      "hero-lede":"صباحات هادئة، برانش ذهبي، وشرفات ساعة الغروب حيث يلتقي البحر بتلال كوست. هذا هو COSTE.",
+      "btn-reserve-hero":"احجز طاولة","btn-discover-hero":"اكتشف المكان",
+      "hero-scroll":"انزل",
+      "manifesto-kicker":"المكان",
+      "manifesto-title":`<span class="reveal-word">بعض</span> <span class="reveal-word">الأماكن</span> <span class="reveal-word">تُزار.</span> <span class="reveal-word manifesto__accent">كوست</span> <span class="reveal-word manifesto__accent">يُحفر</span> <span class="reveal-word manifesto__accent">في الذاكرة.</span>`,
+      "manifesto-body":"متربّعاً بين الأبواب الزرقاء وأشجار البوغانفيل في سيدي بو سعيد، كوست هو بيت للساعات الهادئة — حيث المطبخ المتوسطي والأصوات المختارة ومسرح الغروب يصبحون أسلوب حياة.",
+      "exp-kicker":"التجربة","exp-title":"أربع طرق لعيش<br/>يوم في كوست",
+      "atmos-kicker":"سيدي بو سعيد","atmos-title":"أبواب زرقاء،<br/>جدران كوست،<br/>بحر لا نهاية له.",
+      "atmos-body":"لم نختر أجمل قرى المتوسط بالصدفة. كل تفصيل في كوست يعكسها — اللون الأزرق، الحجر الجيري، وعطر الياسمين في هواء المساء.",
+      "atmos-li1":"شرفة مبنية حول خط الغروب",
+      "atmos-li2":"مطبخ متوسطي بروح تونسية",
+      "atmos-li3":"موسيقى مختارة من الظهر حتى منتصف الليل",
+      "menu-kicker":"المطبخ","menu-title":"الأطباق المميزة &amp;<br/>مشروبات المنزل",
+      "events-kicker":"فعاليات كوست","events-title":"اختر<br/>تجربتك",
+      "footer-cta-title":"طاولتكم<br/>بانتظاركم.","footer-reserve":"احجز في كوست"
+    }
+  };
+
+  const applyLang = (lang) => {
+    const dict = LANGS[lang];
+    if (!dict) return;
+    $$("[data-i18n]").forEach(el => {
+      if (dict[el.dataset.i18n] !== undefined) el.textContent = dict[el.dataset.i18n];
+    });
+    $$("[data-i18n-html]").forEach(el => {
+      const key = el.dataset.i18nHtml;
+      if (dict[key] !== undefined) {
+        el.innerHTML = dict[key];
+        if (el.classList.contains("manifesto__text")) {
+          const rect = el.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < innerHeight) {
+            $$(".reveal-word", el).forEach((w, i) =>
+              setTimeout(() => w.classList.add("is-in"), i * 70));
+          }
+        }
+      }
+    });
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    $$(".nav__lang-btn").forEach(b => b.classList.toggle("is-active", b.dataset.lang === lang));
+    sessionStorage.setItem("coste_lang", lang);
+  };
+
+  $$(".nav__lang-btn").forEach(b => b.addEventListener("click", () => applyLang(b.dataset.lang)));
+  const _savedLang = sessionStorage.getItem("coste_lang");
+  if (_savedLang && _savedLang !== "en") applyLang(_savedLang);
+
+  /* ================================================================
      PRELOADER
      ================================================================ */
   window.addEventListener("load", () => {

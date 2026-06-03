@@ -47,15 +47,23 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
     </a>
 
     <nav class="nav__links" aria-label="Primary">
-      <a href="#experience" data-cursor="hover">Experience</a>
-      <a href="#menu" data-cursor="hover">Menu</a>
-      <a href="#discover" data-cursor="hover">Discover</a>
-      <a href="#events" data-cursor="hover">Events</a>
-      <a href="#club" data-cursor="hover">Coste Club</a>
+      <a href="#experience" data-cursor="hover" data-i18n="nav-experience">Experience</a>
+      <a href="#menu" data-cursor="hover" data-i18n="nav-menu">Menu</a>
+      <a href="#discover" data-cursor="hover" data-i18n="nav-discover">Discover</a>
+      <a href="#events" data-cursor="hover" data-i18n="nav-events">Events</a>
+      <a href="#club" data-cursor="hover" data-i18n="nav-club">Coste Club</a>
     </nav>
 
+    <div class="nav__lang" role="group" aria-label="Language">
+      <button class="nav__lang-btn is-active" data-lang="en">EN</button>
+      <span aria-hidden="true">|</span>
+      <button class="nav__lang-btn" data-lang="fr">FR</button>
+      <span aria-hidden="true">|</span>
+      <button class="nav__lang-btn" data-lang="ar">AR</button>
+    </div>
+
     <button class="nav__cta" data-open-reserve data-cursor="hover">
-      <span>Reserve</span>
+      <span data-i18n="nav-reserve">Reserve</span>
     </button>
 
     <button class="nav__burger" id="burger" aria-label="Open menu">
@@ -67,15 +75,15 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 <!-- ░░░ MOBILE MENU ░░░ -->
 <div class="mobilemenu" id="mobilemenu">
   <nav class="mobilemenu__links">
-    <a href="#experience">Experience</a>
-    <a href="#menu">Menu</a>
-    <a href="#discover">Discover</a>
-    <a href="#events">Events</a>
-    <a href="#club">Coste Club</a>
-    <a href="#influencer">Creators</a>
-    <a href="#catering">Catering</a>
+    <a href="#experience" data-i18n="nav-experience">Experience</a>
+    <a href="#menu" data-i18n="nav-menu">Menu</a>
+    <a href="#discover" data-i18n="nav-discover">Discover</a>
+    <a href="#events" data-i18n="nav-events">Events</a>
+    <a href="#club" data-i18n="nav-club">Coste Club</a>
+    <a href="#influencer" data-i18n="nav-creators">Creators</a>
+    <a href="#catering" data-i18n="nav-catering">Catering</a>
   </nav>
-  <button class="btn btn--solid" data-open-reserve>Reserve a Table</button>
+  <button class="btn btn--solid" data-open-reserve data-i18n="btn-reserve-hero">Reserve a Table</button>
   <div class="mobilemenu__meta">
     <p>Sidi Bou Said, Tunisia</p>
     <p>Open daily · 08:00 — late</p>
@@ -92,23 +100,23 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
   </div>
 
   <div class="hero__content">
-    <p class="hero__eyebrow reveal">Sidi Bou Said · Tunisia</p>
+    <p class="hero__eyebrow reveal" data-i18n="hero-eyebrow">Sidi Bou Said · Tunisia</p>
     <h1 class="hero__title">
-      <span class="reveal-line"><span>A Mediterranean</span></span>
-      <span class="reveal-line"><span><em>escape</em>, above the blue.</span></span>
+      <span class="reveal-line"><span data-i18n="hero-t1">A Mediterranean</span></span>
+      <span class="reveal-line"><span><em data-i18n="hero-em">escape</em><span data-i18n="hero-t2">, above the blue.</span></span></span>
     </h1>
-    <p class="hero__lede reveal">
+    <p class="hero__lede reveal" data-i18n="hero-lede">
       Slow mornings, sunlit brunches, and golden-hour terraces where
       the sea meets the Costewashed hills. This is COSTE.
     </p>
     <div class="hero__actions reveal">
-      <button class="btn btn--solid" data-open-reserve data-cursor="hover">Reserve a Table</button>
-      <a href="#experience" class="btn btn--ghost" data-cursor="hover">Discover the House</a>
+      <button class="btn btn--solid" data-open-reserve data-cursor="hover" data-i18n="btn-reserve-hero">Reserve a Table</button>
+      <a href="#experience" class="btn btn--ghost" data-cursor="hover" data-i18n="btn-discover-hero">Discover the House</a>
     </div>
   </div>
 
   <div class="hero__scroll">
-    <span>Scroll</span>
+    <span data-i18n="hero-scroll">Scroll</span>
     <div class="hero__scroll-line"></div>
   </div>
 
@@ -125,15 +133,15 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 <!-- ░░░░░░░░░░░░░░ MANIFESTO ░░░░░░░░░░░░░░ -->
 <section class="manifesto section">
   <div class="manifesto__inner">
-    <p class="kicker reveal">The House</p>
-    <h2 class="manifesto__text">
+    <p class="kicker reveal" data-i18n="manifesto-kicker">The House</p>
+    <h2 class="manifesto__text" data-i18n-html="manifesto-title">
       <span class="reveal-word">Some</span> <span class="reveal-word">places</span>
       <span class="reveal-word">you</span> <span class="reveal-word">visit.</span>
       <span class="reveal-word manifesto__accent">COSTE</span>
       <span class="reveal-word manifesto__accent">you</span>
       <span class="reveal-word manifesto__accent">remember.</span>
     </h2>
-    <p class="manifesto__body reveal">
+    <p class="manifesto__body reveal" data-i18n="manifesto-body">
       Perched among the cobalt doors and bougainvillea of Sidi Bou Said,
       COSTE is a house for unhurried hours — where Mediterranean cooking,
       curated sound, and the slow theatre of sunset become a way of living.
@@ -144,8 +152,8 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 <!-- ░░░░░░░░░░░░░░ EXPERIENCE ░░░░░░░░░░░░░░ -->
 <section class="experience section" id="experience">
   <div class="section__head">
-    <p class="kicker reveal">The Experience</p>
-    <h2 class="section__title reveal">Four ways to live<br/>a day at COSTE</h2>
+    <p class="kicker reveal" data-i18n="exp-kicker">The Experience</p>
+    <h2 class="section__title reveal" data-i18n-html="exp-title">Four ways to live<br/>a day at COSTE</h2>
   </div>
 
   <div class="exp-grid">
@@ -201,17 +209,17 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
     <img src="img/9.jpg" alt="COSTE atmospheric indoor dining room at night" loading="lazy" decoding="async" />
   </div>
   <div class="atmos__panel">
-    <p class="kicker reveal">Sidi Bou Said</p>
-    <h2 class="atmos__title reveal">Blue doors,<br/>Coste walls,<br/>endless sea.</h2>
-    <p class="reveal">
+    <p class="kicker reveal" data-i18n="atmos-kicker">Sidi Bou Said</p>
+    <h2 class="atmos__title reveal" data-i18n-html="atmos-title">Blue doors,<br/>Coste walls,<br/>endless sea.</h2>
+    <p class="reveal" data-i18n="atmos-body">
       We didn't choose the most beautiful village in the Mediterranean by accident.
       Every detail at COSTE answers to it — the cobalt, the lime-washed stone,
       the jasmine in the evening air.
     </p>
     <ul class="atmos__list">
-      <li class="reveal"><span>01</span> A terrace built around the sunset line</li>
-      <li class="reveal"><span>02</span> Mediterranean kitchen, Tunisian soul</li>
-      <li class="reveal"><span>03</span> Sound curated from afternoon to midnight</li>
+      <li class="reveal"><span>01</span> <span data-i18n="atmos-li1">A terrace built around the sunset line</span></li>
+      <li class="reveal"><span>02</span> <span data-i18n="atmos-li2">Mediterranean kitchen, Tunisian soul</span></li>
+      <li class="reveal"><span>03</span> <span data-i18n="atmos-li3">Sound curated from afternoon to midnight</span></li>
     </ul>
   </div>
 </section>
@@ -219,8 +227,8 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 <!-- ░░░░░░░░░░░░░░ MENU ░░░░░░░░░░░░░░ -->
 <section class="menu section" id="menu">
   <div class="section__head">
-    <p class="kicker reveal">The Kitchen</p>
-    <h2 class="section__title reveal">Signature plates &<br/>house pours</h2>
+    <p class="kicker reveal" data-i18n="menu-kicker">The Kitchen</p>
+    <h2 class="section__title reveal" data-i18n-html="menu-title">Signature plates &amp;<br/>house pours</h2>
   </div>
 
   <div class="menu__layout">
@@ -385,8 +393,8 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 <!-- ░░░░░░░░░░░░░░ EVENTS ░░░░░░░░░░░░░░ -->
 <section class="events section" id="events">
   <div class="section__head">
-    <p class="kicker reveal">Events at COSTE</p>
-    <h2 class="section__title reveal">Pick your<br/>experience</h2>
+    <p class="kicker reveal" data-i18n="events-kicker">Events at COSTE</p>
+    <h2 class="section__title reveal" data-i18n-html="events-title">Pick your<br/>experience</h2>
     <p class="section__intro reveal">From recurring golden-hour sessions to exclusive workshops — every event at COSTE is a table worth booking.</p>
   </div>
 
@@ -609,8 +617,8 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 <!-- ░░░░░░░░░░░░░░ FOOTER ░░░░░░░░░░░░░░ -->
 <footer class="footer">
   <div class="footer__cta">
-    <h2 class="reveal">Your table is<br/>waiting.</h2>
-    <button class="btn btn--solid btn--lg" data-open-reserve data-cursor="hover">Reserve at COSTE</button>
+    <h2 class="reveal" data-i18n-html="footer-cta-title">Your table is<br/>waiting.</h2>
+    <button class="btn btn--solid btn--lg" data-open-reserve data-cursor="hover" data-i18n="footer-reserve">Reserve at COSTE</button>
   </div>
   <div class="footer__inner">
     <div class="footer__brand">
