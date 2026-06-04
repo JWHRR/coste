@@ -62,10 +62,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       <button class="nav__lang-btn" data-lang="ar">AR</button>
     </div>
 
-    <button class="nav__cta" data-open-reserve data-cursor="hover">
-      <span data-i18n="nav-reserve">Reserve</span>
-    </button>
-
     <button class="nav__burger" id="burger" aria-label="Open menu">
       <span></span><span></span>
     </button>
@@ -83,7 +79,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
     <a href="#influencer" data-i18n="nav-creators">Creators</a>
     <a href="#catering" data-i18n="nav-catering">Catering</a>
   </nav>
-  <button class="btn btn--solid" data-open-reserve data-i18n="btn-reserve-hero">Reserve a Table</button>
   <div class="mobilemenu__meta">
     <p>Sidi Bou Said, Tunisia</p>
     <p>Open daily · 08:00 — late</p>
@@ -92,7 +87,8 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 
 <main>
 
-<!-- ░░░░░░░░░░░░░░ HERO ░░░░░░░░░░░░░░ -->
+<!-- ░░░░░░░░░░░░░░ HERO ░░░░░░░░░░░░░░ -->  
+
 <section class="hero" id="hero">
   <div class="hero__media" data-parallax>
     <img src="img/homepage.jpg" alt="COSTE interior — warm lights and guests dining" loading="eager" decoding="sync" />
@@ -110,8 +106,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       the sea meets the Costewashed hills. This is COSTE.
     </p>
     <div class="hero__actions reveal">
-      <button class="btn btn--solid" data-open-reserve data-cursor="hover" data-i18n="btn-reserve-hero">Reserve a Table</button>
-      <a href="#experience" class="btn btn--ghost" data-cursor="hover" data-i18n="btn-discover-hero">Discover the House</a>
+      <a href="#experience" class="btn btn--solid" data-cursor="hover" data-i18n="btn-discover-hero">Discover the House</a>
     </div>
   </div>
 
@@ -199,6 +194,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
         <h3>Sunset Sessions</h3>
         <p>Golden-hour terraces, a resident selector, and the sky doing the talking.</p>
       </div>
+
     </article>
   </div>
 </section>
@@ -302,11 +298,11 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
         <p class="kicker">Chef's Table</p>
         <h3>A seven-course<br/>Mediterranean journey</h3>
         <p>An intimate tasting menu paired with our cellar — reserved for eight guests each evening.</p>
-        <button class="btn btn--solid btn--sm" data-open-reserve data-experience="Chef's Table">Reserve the Chef's Table</button>
       </div>
     </aside>
   </div>
 </section>
+
 
 <!-- ░░░░░░░░░░░░░░ DISCOVER / TOURIST HUB ░░░░░░░░░░░░░░ -->
 <section class="discover section" id="discover">
@@ -423,7 +419,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
               <span>👥 Places limitées</span>
               <span>🍽️ Brunch inclus</span>
             </div>
-            <button class="btn btn--solid btn--sm" data-open-event="Atelier Créatif — 6 Juin — 55 DT/pers" data-cursor="hover">Réserver ma place</button>
           </div>
         </div>
       </article>
@@ -443,7 +438,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
         <div class="event__meta"><span>Every Friday</span><span>·</span><span>18:00</span></div>
         <h3>Sunset Sessions</h3>
         <p>Resident selectors, golden-hour spritz and the terrace at its finest.</p>
-        <button class="btn btn--ghost btn--sm" data-open-reserve data-experience="Sunset Sessions">Book a Spot</button>
       </div>
     </article>
 
@@ -453,7 +447,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
         <div class="event__meta"><span>Weekends</span><span>·</span><span>11:00</span></div>
         <h3>The Grand Brunch</h3>
         <p>A generous Mediterranean table — croissants, crepes, charcuterie and live acoustic sound.</p>
-        <button class="btn btn--ghost btn--sm" data-open-reserve data-experience="Grand Brunch">Book a Spot</button>
       </div>
     </article>
 
@@ -463,7 +456,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
         <div class="event__meta"><span>Monthly</span><span>·</span><span>21:00</span></div>
         <h3>Live Under the Stars</h3>
         <p>Intimate live performances on the upper terrace, under the Sidi Bou Said night sky.</p>
-        <button class="btn btn--ghost btn--sm" data-open-reserve data-experience="Live Under the Stars">Book a Spot</button>
       </div>
     </article>
   </div>
@@ -473,7 +465,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       <p class="kicker">Private Celebrations</p>
       <h3>Make COSTE<br/>entirely yours</h3>
       <p>Weddings, birthdays, brand launches and intimate dinners — the whole house, the whole terrace, the whole sunset. Our events team designs each evening around you.</p>
-      <button class="btn btn--solid" data-open-lead="Private Event" data-cursor="hover">Enquire About Private Events</button>
     </div>
     <div class="events__private-media" data-parallax>
       <img src="img/terrasse.jpg" alt="COSTE private terrace" loading="lazy" decoding="async" />
@@ -481,28 +472,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
   </div>
 </section>
 
-<!-- ░░░░░░░░░░░░░░ EVENT BOOKING MODAL ░░░░░░░░░░░░░░ -->
-<div class="modal" id="eventModal" aria-hidden="true">
-  <div class="modal__overlay" data-close-modal></div>
-  <div class="modal__dialog leadmodal" role="dialog" aria-modal="true">
-    <button class="modal__close" data-close-modal aria-label="Close" data-cursor="hover">×</button>
-    <p class="kicker" id="eventKicker">Event</p>
-    <h3 class="leadmodal__title" id="eventTitle">Reserve your place</h3>
-    <p id="eventSubtitle" style="color:var(--muted);font-size:.9rem;margin:.4rem 0 1.4rem"></p>
-    <form class="leadform" id="eventForm">
-      <div class="field"><label>Full name</label><input name="name" type="text" required placeholder="Your name" data-cursor="hover"/></div>
-      <div class="field-row">
-        <div class="field"><label>Email</label><input name="email" type="email" required placeholder="you@email.com" data-cursor="hover"/></div>
-        <div class="field"><label>Phone / WhatsApp</label><input name="phone" type="tel" required placeholder="+216 …" data-cursor="hover"/></div>
-      </div>
-      <div class="field"><label>Number of places</label><input name="guests" type="number" min="1" max="20" value="1" required data-cursor="hover"/></div>
-      <div class="field"><label>Message <em>(optional)</em></label><textarea name="details" rows="2" placeholder="Any question or special request…" data-cursor="hover"></textarea></div>
-      <input type="hidden" name="eventName" id="eventNameInput"/>
-      <button class="btn btn--solid btn--full" type="submit" data-cursor="hover">Confirm on WhatsApp ↗</button>
-      <p class="leadform__status" aria-live="polite"></p>
-    </form>
-  </div>
-</div>
 
 <!-- ░░░░░░░░░░░░░░ Coste CLUB ░░░░░░░░░░░░░░ -->
 <section class="club section" id="club">
@@ -533,7 +502,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
     </div>
 
     <div class="club__join reveal">
-      <button class="btn btn--solid btn--lg" data-open-lead="Coste Club Membership" data-cursor="hover">Request an Invitation</button>
       <span class="club__note">Membership is complimentary by invitation · Limited each season</span>
     </div>
   </div>
@@ -553,7 +521,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       <li class="reveal">Golden-hour terrace, reserved for content</li>
       <li class="reveal">Collaboration on seasonal campaigns</li>
     </ul>
-    <button class="btn btn--solid" data-open-lead="Creator Collaboration" data-cursor="hover">Apply to Collaborate</button>
   </div>
 </section>
 
@@ -575,18 +542,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
         </ul>
       </div>
 
-      <form class="catering__form leadform reveal" data-lead="Corporate Catering">
-        <h3>Request a proposal</h3>
-        <div class="field"><label>Company</label><input name="company" type="text" required placeholder="Your company" data-cursor="hover" /></div>
-        <div class="field"><label>Contact name</label><input name="name" type="text" required placeholder="Full name" data-cursor="hover" /></div>
-        <div class="field-row">
-          <div class="field"><label>Email</label><input name="email" type="email" required placeholder="you@company.com" data-cursor="hover" /></div>
-          <div class="field"><label>Guests</label><input name="guests" type="number" min="1" placeholder="50" data-cursor="hover" /></div>
-        </div>
-        <div class="field"><label>Tell us about the event</label><textarea name="details" rows="3" placeholder="Date, occasion, vision…" data-cursor="hover"></textarea></div>
-        <button class="btn btn--solid btn--full" type="submit" data-cursor="hover">Request Proposal</button>
-        <p class="leadform__status" aria-live="polite"></p>
-      </form>
     </div>
   </div>
 </section>
@@ -616,10 +571,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 
 <!-- ░░░░░░░░░░░░░░ FOOTER ░░░░░░░░░░░░░░ -->
 <footer class="footer">
-  <div class="footer__cta">
-    <h2 class="reveal" data-i18n-html="footer-cta-title">Your table is<br/>waiting.</h2>
-    <button class="btn btn--solid btn--lg" data-open-reserve data-cursor="hover" data-i18n="footer-reserve">Reserve at COSTE</button>
-  </div>
   <div class="footer__inner">
     <div class="footer__brand">
       <div class="footer__mark">COSTE</div>
@@ -653,91 +604,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 
 </main>
 
-<!-- ░░░░░░░░░░░░░░ RESERVATION MODAL ░░░░░░░░░░░░░░ -->
-<div class="modal" id="reserveModal" aria-hidden="true">
-  <div class="modal__overlay" data-close-modal></div>
-  <div class="modal__dialog reserve" role="dialog" aria-modal="true" aria-label="Reserve a table">
-    <button class="modal__close" data-close-modal aria-label="Close" data-cursor="hover">×</button>
-    <div class="reserve__media">
-      <img src="img/terrassenuit.jpg" alt="COSTE terrace" loading="lazy" decoding="async" />
-      <div class="reserve__media-text">
-        <p class="kicker kicker--light">Live Reservation</p>
-        <h3>Choose your<br/>place at COSTE</h3>
-      </div>
-    </div>
-
-    <form class="reserve__form" id="reserveForm">
-      <div class="reserve__step" data-step="1">
-        <h4 class="reserve__h">Where would you like to sit?</h4>
-        <div class="seatgrid">
-          <label class="seat" data-cursor="hover"><input type="radio" name="seating" value="Terrace" required/><span class="seat__name">Terrace</span><span class="seat__desc">Open-air, sea breeze</span></label>
-          <label class="seat" data-cursor="hover"><input type="radio" name="seating" value="Sunset Table"/><span class="seat__name">Sunset Table</span><span class="seat__desc">Front row to golden hour</span></label>
-          <label class="seat" data-cursor="hover"><input type="radio" name="seating" value="Indoor"/><span class="seat__name">Indoor</span><span class="seat__desc">Cool, intimate, curated sound</span></label>
-          <label class="seat" data-cursor="hover"><input type="radio" name="seating" value="VIP Table"/><span class="seat__name seat__name--vip">VIP Table</span><span class="seat__desc">The best seat in the house</span></label>
-        </div>
-      </div>
-
-      <div class="reserve__step" data-step="2">
-        <h4 class="reserve__h">The details</h4>
-        <div class="field-row">
-          <div class="field"><label>Date</label><input type="date" name="date" required data-cursor="hover"/></div>
-          <div class="field"><label>Time</label><input type="time" name="time" value="18:30" required data-cursor="hover"/></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>Guests</label><input type="number" name="guests" min="1" max="40" value="2" required data-cursor="hover"/></div>
-          <div class="field"><label>Occasion <em>(optional)</em></label><input type="text" name="occasion" placeholder="Birthday, anniversary…" data-cursor="hover"/></div>
-        </div>
-        <input type="hidden" name="experience" id="reserveExperience"/>
-      </div>
-
-      <div class="reserve__step" data-step="3">
-        <h4 class="reserve__h">Last touch</h4>
-        <div class="field"><label>Full name</label><input type="text" name="name" required placeholder="Your name" data-cursor="hover"/></div>
-        <div class="field-row">
-          <div class="field"><label>Email</label><input type="email" name="email" required placeholder="you@email.com" data-cursor="hover"/></div>
-          <div class="field"><label>Phone / WhatsApp</label><input type="tel" name="phone" required placeholder="+216 …" data-cursor="hover"/></div>
-        </div>
-        <label class="reserve__summary" id="reserveSummary"></label>
-      </div>
-
-      <div class="reserve__nav">
-        <button type="button" class="btn btn--ghost btn--sm" id="reservePrev" data-cursor="hover">Back</button>
-        <div class="reserve__dots"><span class="is-active"></span><span></span><span></span></div>
-        <button type="button" class="btn btn--solid btn--sm" id="reserveNext" data-cursor="hover">Continue</button>
-        <button type="submit" class="btn btn--solid btn--sm" id="reserveSubmit" data-cursor="hover" hidden>Confirm via WhatsApp</button>
-      </div>
-    </form>
-
-    <div class="reserve__done" id="reserveDone" hidden>
-      <div class="reserve__done-mark">✓</div>
-      <h3>Almost there</h3>
-      <p>We've prepared your reservation. Confirm it instantly with our concierge on WhatsApp — your table is held while you do.</p>
-      <a class="btn btn--solid btn--lg" id="reserveWhatsApp" target="_blank" rel="noopener" data-cursor="hover">Confirm on WhatsApp</a>
-      <button class="btn btn--ghost btn--sm" data-close-modal data-cursor="hover">Done</button>
-    </div>
-  </div>
-</div>
-
-<!-- ░░░░░░░░░░░░░░ LEAD MODAL (events/creators/catering/club) ░░░░░░░░░░░░░░ -->
-<div class="modal" id="leadModal" aria-hidden="true">
-  <div class="modal__overlay" data-close-modal></div>
-  <div class="modal__dialog leadmodal" role="dialog" aria-modal="true">
-    <button class="modal__close" data-close-modal aria-label="Close" data-cursor="hover">×</button>
-    <p class="kicker" id="leadKicker">Enquiry</p>
-    <h3 class="leadmodal__title" id="leadTitle">Tell us more</h3>
-    <form class="leadform" id="leadForm">
-      <div class="field"><label>Name</label><input name="name" type="text" required placeholder="Full name" data-cursor="hover"/></div>
-      <div class="field-row">
-        <div class="field"><label>Email</label><input name="email" type="email" required placeholder="you@email.com" data-cursor="hover"/></div>
-        <div class="field"><label>Phone</label><input name="phone" type="tel" placeholder="+216 …" data-cursor="hover"/></div>
-      </div>
-      <div class="field"><label>Message</label><textarea name="details" rows="3" placeholder="Tell us what you have in mind…" data-cursor="hover"></textarea></div>
-      <input type="hidden" name="topic" id="leadTopic"/>
-      <button class="btn btn--solid btn--full" type="submit" data-cursor="hover">Send Enquiry</button>
-      <p class="leadform__status" aria-live="polite"></p>
-    </form>
-  </div>
-</div>
 
 <!-- ░░░░░░░░░░░░░░ AI WHATSAPP CONCIERGE ░░░░░░░░░░░░░░ -->
 <button class="concierge-fab" id="conciergeFab" data-cursor="hover" aria-label="Open concierge">
@@ -758,10 +624,9 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 
   <div class="concierge__body" id="conciergeBody">
     <div class="bubble bubble--bot">
-      Welcome to COSTE 🌅 I'm your concierge. How can I help you today?
+      Welcome to COSTE 🌅 I'm your concierge. Ask me anything — events, opening hours, the menu, how to get here…
     </div>
     <div class="concierge__quick" id="conciergeQuick">
-      <button data-q="reserve">Reserve a table</button>
       <button data-q="hours">Opening hours</button>
       <button data-q="sunset">Best sunset time</button>
       <button data-q="event">Private event</button>

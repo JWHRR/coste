@@ -226,187 +226,6 @@
     });
   });
 
-  /* ================================================================
-     MODAL HELPERS
-     ================================================================ */
-  const openModal = (id) => {
-    $("#" + id).classList.add("is-open");
-    document.body.style.overflow = "hidden";
-  };
-  const closeModals = () => {
-    $$(".modal").forEach(m => m.classList.remove("is-open"));
-    document.body.style.overflow = "";
-  };
-  $$("[data-close-modal]").forEach(b => b.addEventListener("click", closeModals));
-  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModals(); });
-
-  /* ================================================================
-     RESERVATION — open + step flow
-     ================================================================ */
-  const reserveForm   = $("#reserveForm");
-  const reserveDone   = $("#reserveDone");
-  const steps         = $$(".reserve__step");
-  const dots          = $$(".reserve__dots span");
-  const btnPrev       = $("#reservePrev");
-  const btnNext       = $("#reserveNext");
-  const btnSubmit     = $("#reserveSubmit");
-  let curStep = 0;
-
-  const showStep = (i) => {
-    curStep = i;
-    steps.forEach((s, n) => s.classList.toggle("is-active", n === i));
-    dots.forEach((d, n) => d.classList.toggle("is-active", n === i));
-    btnPrev.style.visibility = i === 0 ? "hidden" : "visible";
-    const last = i === steps.length - 1;
-    btnNext.hidden = last;
-    btnSubmit.hidden = !last;
-    if (last) buildSummary();
-  };
-
-  const buildSummary = () => {
-    const f = new FormData(reserveForm);
-    $("#reserveSummary").innerHTML =
-      `<strong>Your reservation</strong><br/>
-       ${f.get("seating") || "—"} · ${f.get("guests") || "—"} guests<br/>
-       ${f.get("date") || "—"} at ${f.get("time") || "—"}
-       ${f.get("experience") ? "<br/>" + f.get("experience") : ""}`;
-  };
-
-  const validateStep = (i) => {
-    if (i === 0) {
-      if (!reserveForm.querySelector("input[name='seating']:checked")) {
-        flash("Please choose where you'd like to sit."); return false;
-      }
-    }
-    if (i === 1) {
-      const d = reserveForm.date.value, t = reserveForm.time.value, g = reserveForm.guests.value;
-      if (!d || !t || !g) { flash("Please complete the date, time and guests."); return false; }
-    }
-    return true;
-  };
-
-  let flashTimer;
-  const flash = (msg) => {
-    let el = $("#reserveFlash");
-    if (!el) {
-      el = document.createElement("div");
-      el.id = "reserveFlash";
-      el.style.cssText =
-        "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:2000;" +
-        "background:#15181d;color:#fff;padding:.9rem 1.6rem;border-radius:100px;font-size:.85rem;" +
-        "box-shadow:0 18px 40px rgba(0,0,0,.3);transition:opacity .4s";
-      document.body.appendChild(el);
-    }
-    el.textContent = msg; el.style.opacity = "1";
-    clearTimeout(flashTimer);
-    flashTimer = setTimeout(() => (el.style.opacity = "0"), 2600);
-  };
-
-  $$("[data-open-reserve]").forEach(b => b.addEventListener("click", () => {
-    mobilemenu.classList.remove("is-open");
-    reserveForm.hidden = false;
-    reserveDone.hidden = true;
-    $("#reserveExperience").value = b.dataset.experience || "";
-    showStep(0);
-    openModal("reserveModal");
-  }));
-
-  btnNext.addEventListener("click", () => { if (validateStep(curStep)) showStep(curStep + 1); });
-  btnPrev.addEventListener("click", () => showStep(curStep - 1));
-
-  reserveForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!reserveForm.name.value || !reserveForm.email.value || !reserveForm.phone.value) {
-      flash("Please add your name, email and phone."); return;
-    }
-    const f = new FormData(reserveForm);
-    const msg =
-`Hello COSTE, I'd like to reserve a table 🌅
-
-• Seating: ${f.get("seating")}
-• Date: ${f.get("date")}
-• Time: ${f.get("time")}
-• Guests: ${f.get("guests")}${f.get("occasion") ? "\n• Occasion: " + f.get("occasion") : ""}${f.get("experience") ? "\n• Experience: " + f.get("experience") : ""}
-
-Name: ${f.get("name")}
-Email: ${f.get("email")}
-Phone: ${f.get("phone")}`;
-
-    $("#reserveWhatsApp").href =
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-    reserveForm.hidden = true;
-    reserveDone.hidden = false;
-    // (Hook real bookings here: POST to your reservation API / CRM)
-  });
-
-  /* ================================================================
-     EVENT BOOKING MODAL
-     ================================================================ */
-  $$("[data-open-event]").forEach(b => b.addEventListener("click", () => {
-    const eventName = b.dataset.openEvent;
-    $("#eventKicker").textContent = "Réservation";
-    $("#eventTitle").textContent = eventName.split("—")[0].trim();
-    $("#eventSubtitle").textContent = eventName.split("—").slice(1).join("·").trim();
-    $("#eventNameInput").value = eventName;
-    $("#eventForm").reset();
-    $(".leadform__status", $("#eventForm")).textContent = "";
-    openModal("eventModal");
-  }));
-
-  $("#eventForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const f = new FormData(e.target);
-    const msg =
-`Réservation — ${f.get("eventName")}
-
-Nom: ${f.get("name")}
-Email: ${f.get("email")}
-Téléphone: ${f.get("phone")}
-Nombre de places: ${f.get("guests")}${f.get("details") ? "\nMessage: " + f.get("details") : ""}`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
-    $(".leadform__status", e.target).textContent = "Merci ! Confirmez sur WhatsApp pour finaliser. ✨";
-    e.target.reset();
-  });
-
-  /* ================================================================
-     LEAD MODALS (events / creators / club)
-     ================================================================ */
-  $$("[data-open-lead]").forEach(b => b.addEventListener("click", () => {
-    const topic = b.dataset.openLead;
-    $("#leadKicker").textContent = topic;
-    $("#leadTitle").textContent =
-      topic === "White Club Membership" ? "Request your invitation" :
-      topic === "Creator Collaboration" ? "Apply to collaborate" :
-      topic === "Private Event"        ? "Plan your private event" :
-      "Tell us more";
-    $("#leadTopic").value = topic;
-    $("#leadForm").reset();
-    $(".leadform__status", $("#leadForm")).textContent = "";
-    openModal("leadModal");
-  }));
-
-  /* generic lead form handler (modal + inline catering) */
-  const handleLead = (form, topic) => {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const f = new FormData(form);
-      const status = $(".leadform__status", form);
-      const t = topic || f.get("topic") || "Enquiry";
-      const msg =
-`New ${t} enquiry — COSTE
-
-Name: ${f.get("name") || f.get("company") || ""}
-${f.get("company") ? "Company: " + f.get("company") + "\n" : ""}Email: ${f.get("email") || ""}
-${f.get("phone") ? "Phone: " + f.get("phone") + "\n" : ""}${f.get("guests") ? "Guests: " + f.get("guests") + "\n" : ""}${(f.get("details")) ? "Details: " + f.get("details") : ""}`;
-      // Open WhatsApp pre-filled as the instant channel
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
-      status.textContent = "Thank you — we'll be in touch shortly. ✨";
-      form.reset();
-      // (Hook real lead capture here: POST to CRM / email service)
-    });
-  };
-  handleLead($("#leadForm"));
-  $$("[data-lead]").forEach(f => handleLead(f, f.dataset.lead));
 
   /* ================================================================
      AI WHATSAPP CONCIERGE
@@ -451,30 +270,57 @@ ${f.get("phone") ? "Phone: " + f.get("phone") + "\n" : ""}${f.get("guests") ? "G
 
   // Lightweight intent engine (front-end demo of the AI concierge).
   const KB = [
-    { k: ["reserve","table","book","booking","reservation"],
-      a: "I'd love to get you a table 🌅 You can pick your seating, date and time in our live booking — shall I open it?",
-      cta: { label: "Open reservation", act: () => { toggleConcierge(false); $("[data-open-reserve]").click(); } } },
-    { k: ["hour","open","close","time"],
-      a: "We're open <b>daily from 08:00 until late</b> — breakfast through to sunset and dinner service." },
-    { k: ["sunset","golden"],
-      a: "Golden hour is the soul of COSTE 🌇 In summer the sun sets around <b>19:30–20:00</b>. Arrive ~45 min before for a Sunset Table — they're our most requested." },
-    { k: ["event","private","wedding","birthday","celebration","party"],
-      a: "We host private celebrations and full buyouts. Tell me the date and headcount and I'll connect you to our events team." },
-    { k: ["cater","corporate","company","office"],
-      a: "Yes — corporate dinners, launches and off-site catering across greater Tunis. I can take your brief and send a proposal." },
-    { k: ["menu","food","eat","dish","vegan","vegetarian"],
-      a: "Our kitchen is Mediterranean with a Tunisian soul — burrata, fresh catch from the bay, saffron risotto, plus vegetarian options. The Chef's Table is a 7-course journey for 8 guests nightly." },
-    { k: ["where","location","address","get there","direction","parking"],
-      a: "We're in the heart of <b>Sidi Bou Said</b>, above the bay — about 20 min from central Tunis. Want me to drop a map pin?",
+    { k: ["hello","hi","hey","salut","bonjour","ahla","marhba"],
+      a: "Welcome to COSTE 🌅 I can help you with opening hours, upcoming events, the menu, getting here, or anything else — just ask!" },
+
+    { k: ["hour","open","close","ouvert","horaire","quand","when","schedule"],
+      a: "We're open <b>every day from 08:00 until late</b> ☀️ Morning café, brunch, lunch, dinner and sunset sessions — all in one place." },
+
+    { k: ["event","upcoming","agenda","programme","atelier","workshop","session","music","live","concert","whats on","what's on","soirée"],
+      a: "🎉 <b>Coming up at COSTE:</b><br/>• <b>6 June</b> — Atelier Créatif: Peinture en laine feutrée (55 DT, brunch inclus, 11h–13h30)<br/>• <b>Every Friday</b> — Sunset Sessions from 18:00<br/>• <b>Weekends</b> — The Grand Brunch from 11:00<br/>• <b>Monthly</b> — Live Under the Stars at 21:00<br/><br/>Message us on WhatsApp for details!",
+      cta: { label: "WhatsApp for events", act: () => window.open(baseWa("Hello COSTE, I'd like info about upcoming events 🎉"), "_blank") } },
+
+    { k: ["sunset","golden","coucher"],
+      a: "Golden hour is the soul of COSTE 🌇 In summer the sun sets around <b>19:30–20:00</b>. Arrive ~45 min before to get the best terrace spot." },
+
+    { k: ["coffee","cafe","café","breakfast","morning","petit-déj","pastry"],
+      a: "Our morning café opens at <b>08:00</b> — single-origin coffee, fresh pastries and the first light over the bay ☕ The perfect start to a day in Sidi Bou Said." },
+
+    { k: ["brunch","lunch","déjeuner","weekend"],
+      a: "The Grand Brunch runs <b>every weekend from 11:00</b> — a generous Mediterranean spread of croissants, crepes, charcuterie and live acoustic sound 🥐" },
+
+    { k: ["dinner","dîner","soir","evening","night","nuit"],
+      a: "Dinner service starts in the evening — seasonal coastal menu, candlelight, and signature cocktails. We're open until late every night 🕯️" },
+
+    { k: ["private","wedding","birthday","celebration","party"],
+      a: "We host private celebrations and full venue buyouts 🎊 Weddings, birthdays, launches — the whole house, the whole terrace, the whole sunset. Reach us on WhatsApp to plan your evening.",
+      cta: { label: "Plan a private event", act: () => window.open(baseWa("Hello COSTE, I'd like to enquire about a private event 🎊"), "_blank") } },
+
+    { k: ["cater","corporate","company","office","traiteur"],
+      a: "Yes — corporate dinners, launches and off-site catering across greater Tunis. Drop us a message with your date and headcount and we'll put together a proposal.",
+      cta: { label: "Enquire catering", act: () => window.open(baseWa("Hello COSTE, I'm interested in corporate catering 🍽️"), "_blank") } },
+
+    { k: ["menu","food","eat","dish","vegan","vegetarian","manger","carte"],
+      a: "Our kitchen is Mediterranean with a Tunisian soul 🍽️ Burrata, fresh catch from the bay, saffron risotto, signature cocktails, and vegetarian options throughout. The Chef's Table is a 7-course journey for 8 guests nightly." },
+
+    { k: ["where","location","address","get there","direction","find","adresse","comment"],
+      a: "We're in the heart of <b>Sidi Bou Said</b>, above the bay — about 20 min from central Tunis by TGM train 📍",
       cta: { label: "Open in Maps", act: () => window.open("https://maps.google.com/?q=Sidi+Bou+Said+Tunisia","_blank") } },
+
+    { k: ["parking","car","voiture"],
+      a: "Parking is available in the village — main lot is a 3-minute walk from COSTE. We recommend the TGM train for the most scenic approach 🚃" },
+
+    { k: ["wifi","password","internet"],
+      a: "Yes, we have WiFi 📶 Just ask any member of our team for the password when you arrive." },
+
     { k: ["club","member","membership","loyalty","vip"],
-      a: "The White Club is our membership — priority terraces, VIP event access, rewards and a birthday ritual. It's complimentary by invitation." },
-    { k: ["creator","influencer","collab","press","content"],
-      a: "We host a curated circle of creators ✨ Apply through our Creator Programme and our team reviews each season." },
-    { k: ["hello","hi","hey","salut","bonjour","ahla"],
-      a: "Welcome to COSTE 🌅 How can I make your visit perfect — a reservation, sunset table, or event?" },
-    { k: ["price","cost","how much","expensive"],
-      a: "Starters from around €28, mains €46–62, and signature cocktails ~€22. The Chef's Table is a set tasting — I can share details." }
+      a: "The Coste Club is our members' circle — priority terraces, VIP access to every event, rewards and a birthday ritual. Complimentary by invitation each season 🌟" },
+
+    { k: ["creator","influencer","collab","press","content","photo"],
+      a: "We host a curated circle of photographers and creators ✨ Tell us about your work and our team reviews collaborations each season." },
+
+    { k: ["price","cost","how much","expensive","combien","tarif"],
+      a: "Starters from ~€28, mains €46–62, signature cocktails ~€22. The Chef's Table is a full tasting experience — message us for details 🍷" }
   ];
 
   const respond = (text) => {
@@ -521,7 +367,6 @@ ${f.get("phone") ? "Phone: " + f.get("phone") + "\n" : ""}${f.get("guests") ? "G
 
   // quick-reply chips
   const quickMap = {
-    reserve: "I'd like to reserve a table",
     hours: "What are your opening hours?",
     sunset: "What's the best sunset time?",
     event: "I want to plan a private event",
