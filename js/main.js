@@ -320,7 +320,7 @@
       a: "We host a curated circle of photographers and creators ✨ Tell us about your work and our team reviews collaborations each season." },
 
     { k: ["price","cost","how much","expensive","combien","tarif"],
-      a: "Starters from ~€28, mains €46–62, signature cocktails ~€22. The Chef's Table is a full tasting experience — message us for details 🍷" }
+      a: "Starters from ~28 DT, mains 46–62 DT, signature cocktails ~22 DT. The Chef's Table is a full tasting experience — message us for details 🍷" }
   ];
 
   const respond = (text) => {
