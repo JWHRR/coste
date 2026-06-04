@@ -462,9 +462,19 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 
   <div class="events__private reveal">
     <div class="events__private-body">
-      <p class="kicker">Private Celebrations</p>
-      <h3>Make COSTE<br/>entirely yours</h3>
-      <p>Weddings, birthdays, brand launches and intimate dinners — the whole house, the whole terrace, the whole sunset. Our events team designs each evening around you.</p>
+      <p class="kicker">Host an Event at COSTE</p>
+      <h3>Propose your<br/>event to COSTE</h3>
+      <p>Workshops, pop-ups, exhibitions, themed evenings — if you have a concept that fits our world, pitch it to us. We'll review every proposal.</p>
+      <form class="leadform" id="eventProposeForm" style="margin-top:2rem">
+        <div class="field"><label>Your name</label><input name="name" type="text" required placeholder="Full name" data-cursor="hover"/></div>
+        <div class="field-row">
+          <div class="field"><label>Phone / WhatsApp</label><input name="phone" type="tel" required placeholder="+216 …" data-cursor="hover"/></div>
+          <div class="field"><label>Event type</label><input name="type" type="text" required placeholder="Workshop, concert, pop-up…" data-cursor="hover"/></div>
+        </div>
+        <div class="field"><label>Tell us about your event</label><textarea name="details" rows="3" placeholder="Date, concept, expected audience…" data-cursor="hover"></textarea></div>
+        <button class="btn btn--solid btn--full" type="submit" data-cursor="hover">Send proposal on WhatsApp ↗</button>
+        <p class="leadform__status" aria-live="polite"></p>
+      </form>
     </div>
     <div class="events__private-media" data-parallax>
       <img src="img/terrasse.jpg" alt="COSTE private terrace" loading="lazy" decoding="async" />
@@ -521,6 +531,17 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       <li class="reveal">Golden-hour terrace, reserved for content</li>
       <li class="reveal">Collaboration on seasonal campaigns</li>
     </ul>
+    <form class="leadform reveal" id="creatorForm" style="margin-top:2rem">
+      <h3>Apply to collaborate</h3>
+      <div class="field"><label>Full name</label><input name="name" type="text" required placeholder="Your name" data-cursor="hover"/></div>
+      <div class="field-row">
+        <div class="field"><label>Phone / WhatsApp</label><input name="phone" type="tel" required placeholder="+216 …" data-cursor="hover"/></div>
+        <div class="field"><label>Platform / Handle</label><input name="handle" type="text" required placeholder="@yourhandle" data-cursor="hover"/></div>
+      </div>
+      <div class="field"><label>Tell us about your work</label><textarea name="details" rows="3" placeholder="Style, audience, what you have in mind…" data-cursor="hover"></textarea></div>
+      <button class="btn btn--solid btn--full" type="submit" data-cursor="hover">Send application on WhatsApp ↗</button>
+      <p class="leadform__status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -542,6 +563,18 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
         </ul>
       </div>
 
+      <form class="catering__form leadform reveal" id="cateringForm">
+        <h3>Request a proposal</h3>
+        <div class="field"><label>Company</label><input name="company" type="text" required placeholder="Your company" data-cursor="hover"/></div>
+        <div class="field"><label>Contact name</label><input name="name" type="text" required placeholder="Full name" data-cursor="hover"/></div>
+        <div class="field-row">
+          <div class="field"><label>Phone / WhatsApp</label><input name="phone" type="tel" required placeholder="+216 …" data-cursor="hover"/></div>
+          <div class="field"><label>Guests</label><input name="guests" type="number" min="1" placeholder="50" data-cursor="hover"/></div>
+        </div>
+        <div class="field"><label>Tell us about the event</label><textarea name="details" rows="3" placeholder="Date, occasion, vision…" data-cursor="hover"></textarea></div>
+        <button class="btn btn--solid btn--full" type="submit" data-cursor="hover">Send proposal on WhatsApp ↗</button>
+        <p class="leadform__status" aria-live="polite"></p>
+      </form>
     </div>
   </div>
 </section>

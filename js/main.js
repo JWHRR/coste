@@ -228,6 +228,44 @@
 
 
   /* ================================================================
+     WHATSAPP INLINE FORMS
+     ================================================================ */
+  const waForm = (form, buildMsg) => {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const f = new FormData(form);
+      const status = form.querySelector(".leadform__status");
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildMsg(f))}`, "_blank");
+      status.textContent = "Sent! Our team will get back to you shortly ✨";
+      form.reset();
+    });
+  };
+
+  waForm($("#eventProposeForm"), (f) =>
+`New event proposal — COSTE 🎉
+
+Name: ${f.get("name")}
+Phone: ${f.get("phone")}
+Event type: ${f.get("type")}
+Details: ${f.get("details") || "—"}`);
+
+  waForm($("#creatorForm"), (f) =>
+`Creator application — COSTE ✨
+
+Name: ${f.get("name")}
+Phone: ${f.get("phone")}
+Handle: ${f.get("handle")}
+About: ${f.get("details") || "—"}`);
+
+  waForm($("#cateringForm"), (f) =>
+`Corporate / Catering enquiry — COSTE 🍽️
+
+Company: ${f.get("company")}
+Contact: ${f.get("name")}
+Phone: ${f.get("phone")}${f.get("guests") ? "\nGuests: " + f.get("guests") : ""}
+Details: ${f.get("details") || "—"}`);
+
+  /* ================================================================
      AI WHATSAPP CONCIERGE
      ================================================================ */
   const fab        = $("#conciergeFab");
