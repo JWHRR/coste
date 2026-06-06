@@ -33,7 +33,11 @@
       "atmos-li1":"A terrace built around the sunset line",
       "atmos-li2":"Mediterranean kitchen, Tunisian soul",
       "atmos-li3":"Sound curated from afternoon to midnight",
-      "menu-kicker":"The Kitchen","menu-title":"Signature plates &amp;<br/>house pours",
+      "menu-kicker":"The Kitchen","menu-title":"A new menu<br/>is being plated",
+      "menu-badge":"Coming soon","menu-soon-title":"Something delicious<br/>is on its way.",
+      "menu-soon-lede":"Our chefs are reimagining the COSTE table — from the first leaf to the last spoon. A brand-new seasonal menu, born of the Mediterranean and the Tunisian coast, is almost ready to be served.",
+      "menu-soon-stay":"Stay tuned — the reveal is closer than you think.",
+      "menu-soon-btn":"Be first to taste it ↗",
       "events-kicker":"Events at COSTE","events-title":"Pick your<br/>experience",
       "footer-cta-title":"Your table is<br/>waiting.","footer-reserve":"Reserve at COSTE"
     },
@@ -55,7 +59,11 @@
       "atmos-li1":"Une terrasse bâtie autour de la ligne du coucher de soleil",
       "atmos-li2":"Cuisine méditerranéenne, âme tunisienne",
       "atmos-li3":"Sonorités curées de l'après-midi à minuit",
-      "menu-kicker":"La Cuisine","menu-title":"Plats signatures &amp;<br/>boissons maison",
+      "menu-kicker":"La Cuisine","menu-title":"Une nouvelle carte<br/>se prépare",
+      "menu-badge":"Bientôt disponible","menu-soon-title":"Quelque chose de délicieux<br/>arrive.",
+      "menu-soon-lede":"Nos chefs réinventent la table COSTE — de la première feuille à la dernière cuillère. Une toute nouvelle carte de saison, née de la Méditerranée et de la côte tunisienne, est presque prête à être servie.",
+      "menu-soon-stay":"Restez à l'écoute — la révélation est plus proche que vous ne le pensez.",
+      "menu-soon-btn":"Soyez les premiers à la goûter ↗",
       "events-kicker":"Événements à COSTE","events-title":"Choisissez votre<br/>expérience",
       "footer-cta-title":"Votre table vous<br/>attend.","footer-reserve":"Réserver à COSTE"
     },
@@ -77,7 +85,11 @@
       "atmos-li1":"شرفة مبنية حول خط الغروب",
       "atmos-li2":"مطبخ متوسطي بروح تونسية",
       "atmos-li3":"موسيقى مختارة من الظهر حتى منتصف الليل",
-      "menu-kicker":"المطبخ","menu-title":"الأطباق المميزة &amp;<br/>مشروبات المنزل",
+      "menu-kicker":"المطبخ","menu-title":"قائمة جديدة<br/>قيد التحضير",
+      "menu-badge":"قريباً","menu-soon-title":"شيء لذيذ<br/>في الطريق.",
+      "menu-soon-lede":"يعيد طهاتنا ابتكار مائدة كوست — من أول ورقة إلى آخر ملعقة. قائمة موسمية جديدة كلياً، وُلدت من البحر المتوسط والساحل التونسي، شارفت على أن تُقدَّم.",
+      "menu-soon-stay":"ترقّبوا — الكشف أقرب مما تتصوّرون.",
+      "menu-soon-btn":"كونوا أول من يتذوقها ↗",
       "events-kicker":"فعاليات كوست","events-title":"اختر<br/>تجربتك",
       "footer-cta-title":"طاولتكم<br/>بانتظاركم.","footer-reserve":"احجز في كوست"
     }
@@ -326,6 +338,20 @@
 
     // reveal the freshly injected cards via the existing observer
     $$(".upcoming-event").forEach(el => { el.classList.add("reveal"); io.observe(el); });
+  }
+
+  /* ================================================================
+     GUEST VOICES — seamless moving marquee
+     ----------------------------------------------------------------
+     Duplicate the cards once so the -50% scroll loops without a seam.
+     ================================================================ */
+  const reviewsTrack = $("#reviewsTrack");
+  if (reviewsTrack && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    $$(".review-card", reviewsTrack).forEach(card => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      reviewsTrack.appendChild(clone);
+    });
   }
 
   /* ================================================================

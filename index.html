@@ -209,11 +209,11 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
   <div class="menu-soon reveal">
     <div class="menu-soon__glow" aria-hidden="true"></div>
 
-    <span class="menu-soon__badge"><i></i> Coming soon</span>
+    <span class="menu-soon__badge"><i></i> <span data-i18n="menu-badge">Coming soon</span></span>
 
-    <h3 class="menu-soon__title">Something delicious<br/>is on its way.</h3>
+    <h3 class="menu-soon__title" data-i18n-html="menu-soon-title">Something delicious<br/>is on its way.</h3>
 
-    <p class="menu-soon__lede">
+    <p class="menu-soon__lede" data-i18n="menu-soon-lede">
       Our chefs are reimagining the COSTE table — from the first leaf to the last spoon.
       A brand-new seasonal menu, born of the Mediterranean and the Tunisian coast,
       is almost ready to be served.
@@ -224,9 +224,9 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       <span>Saffron</span><span>·</span><span>Jasmine</span><span>·</span><span>Golden&nbsp;Hour</span>
     </div>
 
-    <p class="menu-soon__stay">Stay tuned — the reveal is closer than you think.</p>
+    <p class="menu-soon__stay" data-i18n="menu-soon-stay">Stay tuned — the reveal is closer than you think.</p>
 
-    <a class="btn btn--solid" href="https://www.instagram.com/coste_sidi_bou/" target="_blank" rel="noopener" data-cursor="hover">Be first to taste it ↗</a>
+    <a class="btn btn--solid" href="https://www.instagram.com/coste_sidi_bou/" target="_blank" rel="noopener" data-cursor="hover" data-i18n="menu-soon-btn">Be first to taste it ↗</a>
   </div>
 </section>
 
@@ -241,9 +241,10 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
     </div>
   </div>
 
-  <div class="reviews__grid">
+  <div class="reviews__marquee reveal">
+   <div class="reviews__track" id="reviewsTrack">
 
-    <article class="review-card reveal" data-cursor="hover">
+    <article class="review-card" data-cursor="hover">
       <div class="review-card__top">
         <span class="review-card__stars">★★★★★</span>
         <span class="review-card__g">G</span>
@@ -263,7 +264,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       </div>
     </article>
 
-    <article class="review-card reveal" data-cursor="hover">
+    <article class="review-card" data-cursor="hover">
       <div class="review-card__top">
         <span class="review-card__stars">★★★★★</span>
         <span class="review-card__g">G</span>
@@ -280,7 +281,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       </div>
     </article>
 
-    <article class="review-card reveal" data-cursor="hover">
+    <article class="review-card" data-cursor="hover">
       <div class="review-card__top">
         <span class="review-card__stars">★★★★★</span>
         <span class="review-card__g">G</span>
@@ -300,7 +301,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       </div>
     </article>
 
-    <article class="review-card reveal" data-cursor="hover">
+    <article class="review-card" data-cursor="hover">
       <div class="review-card__top">
         <span class="review-card__stars">★★★★★</span>
         <span class="review-card__g">G</span>
@@ -320,7 +321,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       </div>
     </article>
 
-    <article class="review-card reveal" data-cursor="hover">
+    <article class="review-card" data-cursor="hover">
       <div class="review-card__top">
         <span class="review-card__stars">★★★★★</span>
         <span class="review-card__g">G</span>
@@ -340,7 +341,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       </div>
     </article>
 
-    <article class="review-card reveal" data-cursor="hover">
+    <article class="review-card" data-cursor="hover">
       <div class="review-card__top">
         <span class="review-card__stars">★★★★★</span>
         <span class="review-card__g">G</span>
@@ -360,6 +361,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
       </div>
     </article>
 
+   </div>
   </div>
 </section>
 

@@ -567,14 +567,26 @@ em{font-style:italic}
 .reviews__stars-overall{color:var(--gold);font-size:1.5rem;letter-spacing:4px}
 .reviews__source{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 
-.reviews__grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1.6rem;
+/* moving marquee of guest reviews */
+.reviews__marquee{
+  position:relative;
   margin-top:3.5rem;
+  overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
 }
+.reviews__track{
+  display:flex;
+  width:max-content;
+  animation:reviewsScroll 55s linear infinite;
+  will-change:transform;
+}
+.reviews__marquee:hover .reviews__track{animation-play-state:paused}
 
 .review-card{
+  flex:0 0 auto;
+  width:clamp(290px,32vw,380px);
+  margin-right:1.6rem;
   background:var(--bg-3);
   border-radius:18px;
   padding:2rem;
@@ -585,9 +597,10 @@ em{font-style:italic}
   transition:transform .35s var(--ease),box-shadow .35s var(--ease);
 }
 .review-card:hover{
-  transform:translateY(-5px);
-  box-shadow:inset 0 0 0 1px rgba(200,168,106,.35),var(--shadow-lg);
+  transform:translateY(-6px) scale(1.015);
+  box-shadow:inset 0 0 0 1px rgba(200,168,106,.45),0 30px 70px rgba(0,0,0,.55),0 0 32px rgba(200,168,106,.12);
 }
+@keyframes reviewsScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 .review-card__top{display:flex;align-items:center;justify-content:space-between}
 .review-card__stars{color:var(--gold);font-size:1rem;letter-spacing:3px}
@@ -636,7 +649,6 @@ em{font-style:italic}
    RESPONSIVE
    =================================================================== */
 @media (max-width:1024px){
-  .reviews__grid{grid-template-columns:repeat(2,1fr)}
   .menu__layout,.catering__grid{grid-template-columns:1fr}
   .menu__feature{position:static;max-width:480px}
   .gallery__grid{grid-template-columns:repeat(3,1fr)}
@@ -645,7 +657,6 @@ em{font-style:italic}
   .club__cards{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:768px){
-  .reviews__grid{grid-template-columns:1fr}
   .nav__links{display:none}
   .nav__cta{display:none}
   .nav__burger{display:flex}
@@ -668,4 +679,7 @@ em{font-style:italic}
   *{animation-duration:.001ms!important;transition-duration:.001ms!important}
   .reveal,.reveal-word,.reveal-line>span{opacity:1!important;transform:none!important}
   body::after{display:none}
+  /* no auto-scroll: let guests swipe the reviews instead */
+  .reviews__track{animation:none!important;transform:none!important}
+  .reviews__marquee{overflow-x:auto;-webkit-overflow-scrolling:touch}
 }
