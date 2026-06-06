@@ -228,9 +228,111 @@
 
 
   /* ================================================================
+     EVENTS — auto upcoming / recent by date + registration
+     ----------------------------------------------------------------
+     Add events to COSTE_EVENTS below. Each one shows under "Upcoming"
+     with a registration button until its date passes — then it moves
+     itself to "Recent events" automatically.
+     ================================================================ */
+  const COSTE_EVENTS = [
+    {
+      date: "2026-06-06",                       // YYYY-MM-DD
+      tag: "Atelier Créatif",
+      title: "Palette de peinture<br/>en laine feutrée",
+      desc: "Une expérience créative immersive par Lainess Design. Brunch inclus, matériel fourni.",
+      img: "img/events/112.jpg",
+      price: "55 DT",
+      details: ["🕐 11:00 – 13:30", "👥 Places limitées", "🍽️ Brunch inclus"]
+    }
+    // ↑ duplicate this block to add a new event — order doesn't matter.
+  ];
+
+  const upcomingGrid = $("#upcomingGrid");
+  if (upcomingGrid) {
+    const MONTHS_FR = ["Jan","Fév","Mars","Avr","Mai","Juin","Juil","Août","Sept","Oct","Nov","Déc"];
+    const recentGrid   = $("#recentGrid");
+    const recentWrap   = $("#recentWrap");
+    const upcomingEmpty = $("#upcomingEmpty");
+
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const parseDate = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+
+    const upcoming = [], past = [];
+    COSTE_EVENTS.forEach(ev => {
+      const d = parseDate(ev.date);
+      (d < today ? past : upcoming).push(Object.assign({ _d: d }, ev));
+    });
+    upcoming.sort((a, b) => a._d - b._d);   // soonest first
+    past.sort((a, b) => b._d - a._d);       // most recent first
+
+    const dateBlock = (d) =>
+      `<div class="upcoming-event__date"><span class="ue-day">${String(d.getDate()).padStart(2, "0")}</span><span class="ue-month">${MONTHS_FR[d.getMonth()]}</span></div>`;
+
+    const registerLink = (ev) =>
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+        `Bonjour COSTE 🌅 Je souhaite m'inscrire à l'événement « ${ev.tag} » du ${String(ev._d.getDate()).padStart(2, "0")} ${MONTHS_FR[ev._d.getMonth()]} ${ev._d.getFullYear()}.`
+      )}`;
+
+    const detailsHtml = (ev) =>
+      (ev.details && ev.details.length)
+        ? `<div class="upcoming-event__details">${ev.details.map(x => `<span>${x}</span>`).join("")}</div>`
+        : "";
+
+    const upcomingCard = (ev) =>
+`<article class="upcoming-event" data-cursor="hover">
+  <div class="upcoming-event__poster">
+    <img src="${ev.img}" alt="${ev.tag} — COSTE" loading="lazy" decoding="async" />
+    ${ev.price ? `<div class="upcoming-event__badge">${ev.price}</div>` : ""}
+  </div>
+  <div class="upcoming-event__body">
+    ${dateBlock(ev._d)}
+    <div class="upcoming-event__info">
+      <span class="upcoming-event__tag">${ev.tag}</span>
+      <h3>${ev.title}</h3>
+      <p>${ev.desc}</p>
+      ${detailsHtml(ev)}
+      <a class="btn btn--solid btn--sm upcoming-event__register" href="${registerLink(ev)}" target="_blank" rel="noopener" data-cursor="hover">S'inscrire ↗</a>
+    </div>
+  </div>
+</article>`;
+
+    const pastCard = (ev) =>
+`<article class="upcoming-event upcoming-event--past" data-cursor="hover">
+  <div class="upcoming-event__poster">
+    <img src="${ev.img}" alt="${ev.tag} — COSTE" loading="lazy" decoding="async" />
+    <div class="upcoming-event__badge upcoming-event__badge--done">Terminé</div>
+  </div>
+  <div class="upcoming-event__body">
+    ${dateBlock(ev._d)}
+    <div class="upcoming-event__info">
+      <span class="upcoming-event__tag">${ev.tag}</span>
+      <h3>${ev.title}</h3>
+      <p>${ev.desc}</p>
+    </div>
+  </div>
+</article>`;
+
+    if (upcoming.length) {
+      upcomingGrid.innerHTML = upcoming.map(upcomingCard).join("");
+      if (upcomingEmpty) upcomingEmpty.hidden = true;
+    } else if (upcomingEmpty) {
+      upcomingEmpty.hidden = false;
+    }
+
+    if (past.length && recentGrid && recentWrap) {
+      recentGrid.innerHTML = past.map(pastCard).join("");
+      recentWrap.hidden = false;
+    }
+
+    // reveal the freshly injected cards via the existing observer
+    $$(".upcoming-event").forEach(el => { el.classList.add("reveal"); io.observe(el); });
+  }
+
+  /* ================================================================
      WHATSAPP INLINE FORMS
      ================================================================ */
   const waForm = (form, buildMsg) => {
+    if (!form) return;
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const f = new FormData(form);
