@@ -207,6 +207,7 @@ em{font-style:italic}
 .reveal-word{display:inline-block;opacity:0;transform:translateY(40%);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .reveal-word.is-in{opacity:1;transform:translateY(0)}
 .manifesto__body{max-width:600px;margin:2.6rem auto 0;color:var(--muted);font-size:1.12rem}
+.manifesto .discover__map{margin-top:clamp(3rem,6vw,5rem);text-align:left}
 
 /* ===================================================================
    EXPERIENCE GRID
