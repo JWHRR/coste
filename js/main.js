@@ -393,6 +393,24 @@ Contact: ${f.get("name")}
 Phone: ${f.get("phone")}${f.get("guests") ? "\nGuests: " + f.get("guests") : ""}
 Details: ${f.get("details") || "—"}`);
 
+  /* Chef's Preview — menu opt-in. No email backend on this site, so we route
+     the lead to WhatsApp like every other form. To plug in a real mailing list
+     (Mailchimp/Brevo/etc.), swap the window.open line for a fetch() POST. */
+  const menuOptin = $("#menuOptin");
+  if (menuOptin) {
+    menuOptin.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = (new FormData(menuOptin).get("email") || "").toString().trim();
+      const status = menuOptin.querySelector(".leadform__status");
+      if (!email) return;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+        `Hello COSTE 🌅 Add me to the menu list — I'd love the full menu first: ${email}`
+      )}`, "_blank");
+      if (status) status.textContent = "You're on the list ✨ The full menu lands in your inbox first.";
+      menuOptin.reset();
+    });
+  }
+
   /* ================================================================
      AI WHATSAPP CONCIERGE
      ================================================================ */

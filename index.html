@@ -91,7 +91,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 
 <section class="hero" id="hero">
   <div class="hero__media" data-parallax>
-    <img src="img/homepage.jpg" alt="COSTE interior — warm lights and guests dining" loading="eager" decoding="sync" />
+    <img src="img/homepage.jpg" alt="COSTE interior — warm lights and guests dining" loading="eager" fetchpriority="high" decoding="sync" />
     <div class="hero__scrim"></div>
   </div>
 
@@ -223,27 +223,46 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
     <h2 class="section__title reveal" data-i18n-html="menu-title">A new menu<br/>is being plated</h2>
   </div>
 
-  <div class="menu-soon reveal">
+  <div class="chef-preview menu-soon reveal">
     <div class="menu-soon__glow" aria-hidden="true"></div>
 
-    <span class="menu-soon__badge"><i></i> <span data-i18n="menu-badge">Coming soon</span></span>
+    <span class="menu-soon__badge"><i></i> <span>Chef's Preview</span></span>
 
-    <h3 class="menu-soon__title" data-i18n-html="menu-soon-title">Something delicious<br/>is on its way.</h3>
+    <h3 class="menu-soon__title">A Mediterranean table,<br/>with a Tunisian soul.</h3>
 
-    <p class="menu-soon__lede" data-i18n="menu-soon-lede">
-      Our chefs are reimagining the COSTE table — from the first leaf to the last spoon.
-      A brand-new seasonal menu, born of the Mediterranean and the Tunisian coast,
-      is almost ready to be served.
+    <p class="menu-soon__lede">
+      Born where the sea meets the sun-bleached coast, our kitchen reads like a
+      love letter to the Mediterranean — sea-salt and saffron, charred citrus and
+      cold-pressed olive oil, jasmine carried in on the evening air. Slow fire,
+      honest produce, and the unhurried generosity of the Tunisian table.
     </p>
 
-    <div class="menu-soon__teaser" aria-hidden="true">
-      <span>Sea</span><span>·</span><span>Fire</span><span>·</span><span>Citrus</span><span>·</span>
-      <span>Saffron</span><span>·</span><span>Jasmine</span><span>·</span><span>Golden&nbsp;Hour</span>
+    <div class="chef-preview__teasers">
+      <article class="teaser">
+        <span class="teaser__index">01</span>
+        <h4 class="teaser__name">Saffron-Infused Seafood</h4>
+        <p class="teaser__desc">The morning's catch from the bay, kissed with saffron, fennel and a whisper of harissa.</p>
+      </article>
+      <article class="teaser">
+        <span class="teaser__index">02</span>
+        <h4 class="teaser__name">Jasmine &amp; Honey Pastries</h4>
+        <p class="teaser__desc">Flaky layers steeped in jasmine syrup and golden honey — the sweet close to every COSTE evening.</p>
+      </article>
+      <article class="teaser">
+        <span class="teaser__index">03</span>
+        <h4 class="teaser__name">Citrus &amp; Olive Mezze</h4>
+        <p class="teaser__desc">A slow-grazed spread of marinated olives, blistered peppers and bright citrus, made to share.</p>
+      </article>
     </div>
 
-    <p class="menu-soon__stay" data-i18n="menu-soon-stay">Stay tuned — the reveal is closer than you think.</p>
-
-    <a class="btn btn--solid" href="https://www.instagram.com/coste_sidi_bou/" target="_blank" rel="noopener" data-cursor="hover" data-i18n="menu-soon-btn">Be first to taste it ↗</a>
+    <form class="chef-preview__optin" id="menuOptin">
+      <label for="menuOptinEmail" class="chef-preview__optin-label">Get the full menu first</label>
+      <div class="chef-preview__optin-row">
+        <input id="menuOptinEmail" name="email" type="email" required placeholder="your@email.com" autocomplete="email" data-cursor="hover" />
+        <button class="btn btn--solid" type="submit" data-cursor="hover">Notify me ↗</button>
+      </div>
+      <p class="leadform__status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
@@ -466,7 +485,7 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
   <div class="events__private reveal">
     <div class="events__private-body">
       <p class="kicker">Host an Event at COSTE</p>
-      <h3>Propose your<br/>event to COSTE</h3>
+      <h2>Propose your<br/>event to COSTE</h2>
       <p>Workshops, pop-ups, exhibitions, themed evenings — if you have a concept that fits our world, pitch it to us. We'll review every proposal.</p>
       <form class="leadform" id="eventProposeForm" style="margin-top:2rem">
         <div class="field"><label>Your name</label><input name="name" type="text" required placeholder="Full name" data-cursor="hover"/></div>

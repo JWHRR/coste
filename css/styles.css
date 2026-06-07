@@ -51,7 +51,12 @@ body{
   font-family:var(--sans);
   color:var(--cream);
   background:var(--bg);
-  line-height:1.6;font-weight:300;overflow-x:hidden;position:relative;
+  line-height:1.6;font-weight:300;
+  /* overflow-x:clip — NOT hidden. `hidden` forces overflow-y to compute to
+     `auto`, turning <body> into its own nested scroll container, which is what
+     made the wheel/trackpad feel "captured" while PageDown still worked.
+     `clip` contains horizontal overflow without creating a scroll container. */
+  overflow-x:clip;position:relative;
 }
 /* Ambient luxury glows fixed behind everything */
 body::before{
@@ -275,6 +280,26 @@ em{font-style:italic}
 .menu-soon__stay{position:relative;font-family:var(--sans);font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem}
 .menu-soon .btn{position:relative}
 
+/* ---- Chef's Preview (signature teasers + email opt-in) ---- */
+.chef-preview__teasers{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1rem,2.5vw,1.8rem);margin:2.6rem 0 2.8rem;text-align:left}
+.teaser{padding:1.8rem 1.6rem;border-radius:16px;background:rgba(255,255,255,.03);box-shadow:inset 0 0 0 1px var(--line-soft);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.teaser:hover{transform:translateY(-6px);box-shadow:inset 0 0 0 1px var(--gold),var(--glow-gold)}
+.teaser__index{font-size:.72rem;letter-spacing:.3em;color:var(--gold);display:block;margin-bottom:.9rem}
+.teaser__name{font-family:var(--serif);font-weight:400;font-size:1.35rem;line-height:1.15;color:var(--cream);margin-bottom:.6rem}
+.teaser__desc{font-size:.92rem;color:var(--muted);line-height:1.6}
+
+.chef-preview__optin{position:relative;max-width:520px;margin:0 auto;text-align:center}
+.chef-preview__optin-label{display:block;font-family:var(--sans);font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-br);margin-bottom:1rem}
+.chef-preview__optin-row{display:flex;gap:.7rem;align-items:stretch}
+.chef-preview__optin-row input{flex:1;min-width:0;border:none;border-radius:100px;padding:1rem 1.4rem;background:rgba(255,255,255,.04);color:var(--cream);box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .4s var(--ease)}
+.chef-preview__optin-row input::placeholder{color:rgba(239,233,220,.3)}
+.chef-preview__optin-row input:focus{outline:none;box-shadow:inset 0 0 0 1px var(--gold)}
+.chef-preview__optin-row .btn{white-space:nowrap;flex-shrink:0}
+@media(max-width:560px){
+  .chef-preview__teasers{grid-template-columns:1fr}
+  .chef-preview__optin-row{flex-direction:column}
+}
+
 /* ===================================================================
    DISCOVER / TOURIST HUB
    =================================================================== */
@@ -323,7 +348,7 @@ em{font-style:italic}
 .events__private{margin-top:clamp(2rem,5vw,4rem);display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#11141b,#0c1726);color:var(--cream);box-shadow:inset 0 0 0 1px var(--line),var(--shadow-lg)}
 .events__private-body{padding:clamp(2.6rem,6vw,5rem);display:flex;flex-direction:column;justify-content:center}
 .events__private-body .kicker{color:var(--gold-br)}
-.events__private-body h3{font-size:clamp(2rem,4vw,3.4rem);margin-bottom:1.4rem}
+.events__private-body h2,.events__private-body h3{font-size:clamp(2rem,4vw,3.4rem);margin-bottom:1.4rem}
 .events__private-body p{color:var(--cream-2);max-width:44ch;margin-bottom:2rem}
 .events__private-body .btn--solid{align-self:flex-start}
 .events__private-media{position:relative;overflow:hidden;min-height:360px}
@@ -685,12 +710,13 @@ em{font-style:italic}
   #host .events__private-media{order:-1;min-height:0;aspect-ratio:16/9}
   #host .events__private-media img{transform:none!important}      /* no parallax over-zoom */
   #host .events__private-body{padding:clamp(1.6rem,5vw,2.4rem)}
-  #host .events__private-body h3{font-size:clamp(1.9rem,6vw,2.6rem);margin-bottom:1rem}
+  #host .events__private-body h2,#host .events__private-body h3{font-size:clamp(1.9rem,6vw,2.6rem);margin-bottom:1rem}
   #host .events__private-body>p:not(.kicker){margin-bottom:1.4rem}
   #host .leadform{background:transparent;box-shadow:none;padding:0;margin-top:1.4rem!important}
 }
 
 @media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
   *{animation-duration:.001ms!important;transition-duration:.001ms!important}
   .reveal,.reveal-word,.reveal-line>span{opacity:1!important;transform:none!important}
   body::after{display:none}
