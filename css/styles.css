@@ -677,11 +677,15 @@ em{font-style:italic}
   .upcoming-event{grid-template-columns:1fr}
   .upcoming-event__poster{width:100%;height:220px}
   .upcoming-event__body{flex-direction:column;padding:1.4rem}
-  /* Host an Event — cleaner stacking on phones */
-  #host .events__private{margin-top:1.5rem}
-  #host .events__private-media{order:-1;min-height:0;aspect-ratio:16/10}
-  #host .events__private-body{padding:1.6rem}
-  #host .events__private-body h3{font-size:2rem;margin-bottom:1rem}
+}
+
+/* ── Host an Event — clean single-column layout on phones & tablets ── */
+@media (max-width:900px){
+  #host .events__private{grid-template-columns:1fr;margin-top:1.5rem}
+  #host .events__private-media{order:-1;min-height:0;aspect-ratio:16/9}
+  #host .events__private-media img{transform:none!important}      /* no parallax over-zoom */
+  #host .events__private-body{padding:clamp(1.6rem,5vw,2.4rem)}
+  #host .events__private-body h3{font-size:clamp(1.9rem,6vw,2.6rem);margin-bottom:1rem}
   #host .events__private-body>p:not(.kicker){margin-bottom:1.4rem}
   #host .leadform{background:transparent;box-shadow:none;padding:0;margin-top:1.4rem!important}
 }
