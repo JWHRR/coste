@@ -6,7 +6,7 @@
 
   /* ---- CONFIG ---------------------------------------------------- */
   // Replace with the venue's real WhatsApp number (international, digits only)
-  const WHATSAPP_NUMBER = "21620785018";
+  const WHATSAPP_NUMBER = "21621355111";
 
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
@@ -33,7 +33,7 @@
       "atmos-li1":"A terrace built around the sunset line",
       "atmos-li2":"Mediterranean kitchen, Tunisian soul",
       "atmos-li3":"Sound curated from afternoon to midnight",
-      "menu-kicker":"The Kitchen","menu-title":"A new menu<br/>is being plated",
+      "menu-kicker":"The Kitchen","menu-title":"The Coste<br/>menu",
       "menu-badge":"Coming soon","menu-soon-title":"Something delicious<br/>is on its way.",
       "menu-soon-lede":"Our chefs are reimagining the COSTE table — from the first leaf to the last spoon. A brand-new seasonal menu, born of the Mediterranean and the Tunisian coast, is almost ready to be served.",
       "menu-soon-stay":"Stay tuned — the reveal is closer than you think.",
@@ -59,7 +59,7 @@
       "atmos-li1":"Une terrasse bâtie autour de la ligne du coucher de soleil",
       "atmos-li2":"Cuisine méditerranéenne, âme tunisienne",
       "atmos-li3":"Sonorités curées de l'après-midi à minuit",
-      "menu-kicker":"La Cuisine","menu-title":"Une nouvelle carte<br/>se prépare",
+      "menu-kicker":"La Cuisine","menu-title":"La carte<br/>Coste",
       "menu-badge":"Bientôt disponible","menu-soon-title":"Quelque chose de délicieux<br/>arrive.",
       "menu-soon-lede":"Nos chefs réinventent la table COSTE — de la première feuille à la dernière cuillère. Une toute nouvelle carte de saison, née de la Méditerranée et de la côte tunisienne, est presque prête à être servie.",
       "menu-soon-stay":"Restez à l'écoute — la révélation est plus proche que vous ne le pensez.",
@@ -85,7 +85,7 @@
       "atmos-li1":"شرفة مبنية حول خط الغروب",
       "atmos-li2":"مطبخ متوسطي بروح تونسية",
       "atmos-li3":"موسيقى مختارة من الظهر حتى منتصف الليل",
-      "menu-kicker":"المطبخ","menu-title":"قائمة جديدة<br/>قيد التحضير",
+      "menu-kicker":"المطبخ","menu-title":"قائمة<br/>كوست",
       "menu-badge":"قريباً","menu-soon-title":"شيء لذيذ<br/>في الطريق.",
       "menu-soon-lede":"يعيد طهاتنا ابتكار مائدة كوست — من أول ورقة إلى آخر ملعقة. قائمة موسمية جديدة كلياً، وُلدت من البحر المتوسط والساحل التونسي، شارفت على أن تُقدَّم.",
       "menu-soon-stay":"ترقّبوا — الكشف أقرب مما تتصوّرون.",
@@ -393,21 +393,124 @@ Contact: ${f.get("name")}
 Phone: ${f.get("phone")}${f.get("guests") ? "\nGuests: " + f.get("guests") : ""}
 Details: ${f.get("details") || "—"}`);
 
-  /* Chef's Preview — menu opt-in. No email backend on this site, so we route
-     the lead to WhatsApp like every other form. To plug in a real mailing list
-     (Mailchimp/Brevo/etc.), swap the window.open line for a fetch() POST. */
-  const menuOptin = $("#menuOptin");
-  if (menuOptin) {
-    menuOptin.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = (new FormData(menuOptin).get("email") || "").toString().trim();
-      const status = menuOptin.querySelector(".leadform__status");
-      if (!email) return;
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-        `Hello COSTE 🌅 Add me to the menu list — I'd love the full menu first: ${email}`
-      )}`, "_blank");
-      if (status) status.textContent = "You're on the list ✨ The full menu lands in your inbox first.";
-      menuOptin.reset();
+  /* ================================================================
+     MENU — data-driven, category tabs
+     ----------------------------------------------------------------
+     Names + prices mirror the official menu (menucoste.netlify.app).
+     To edit: change a price or add an item in COSTE_MENU below — the
+     page re-renders from this single source of truth. Prices are in
+     Tunisian Dinar (the " DT" suffix is added in CSS).
+     ================================================================ */
+  const COSTE_MENU = [
+    { id:"petit-dej", label:"Petit Déjeuner", kicker:"Le Matin", img:"img/menu/petit-dejeuner.jpg",
+      tagline:"Slow mornings above the bay — formules, brunch and the first light.",
+      groups:[
+        { title:"Formules", items:[["L'artiste","9.300"],["L'architecte","11.800"],["L'amoureux","12.800"],["Le financier","11.800"],["Le manager","17.300"],["Coste","19.300"],["L'expert","21.200"]] },
+        { title:"Brunch", items:[["Pour deux personnes","46.000"]] },
+        { title:"À la carte", items:[["Healthy","23.900"],["Tunisien","23.000"],["Continental","25.900"],["L'Américain","23.900"]] }
+      ]
+    },
+    { id:"chaud", label:"Boissons Chaudes", kicker:"Chaud", img:"img/menu/boissons-chaudes.jpg",
+      tagline:"Single-origin coffee, signature lattes, teas and hot chocolate.",
+      groups:[
+        { title:"Classique", items:[["Express","6.500"],["Cappucin","6.800"],["Café crème","7.200"],["Americain","6.900"],["Café turc","8.800"],["Nescafé au lait","7.200"]] },
+        { title:"Café Signature", items:[["Expresso","8.500"],["Macchiato","8.800"],["Cappuccino","9.200"],["Cappuccino chantilly","10.200"],["Café liégeois","10.300"],["Café aromatisé","10.500"],["Maroccino","9.900"],["Tiramisu","9.900"],["Viennese","9.900"],["Montebianco","9.900"],["Amabile","9.900"]] },
+        { title:"Hot Chocolate", items:[["Nutella Chaud","14.000"],["Chocolat au lait","8.800"],["Chocolat chaud nature","10.900"],["Chocolat chaud aromatisé","13.500"],["Chocolat chaud chantilly","13.500"],["Chocolat chaud amandes","13.500"]] },
+        { title:"Thés & Chicha", items:[["Thé marocain","6.500"],["Supplément amandes","5.800"],["Thé aux pignons","14.900"],["Thé infusion","8.500"],["Thé infusion Lipton","9.800"],["Chicha","20.000"],["Chicha Glacon","24.500"],["Supplément jabbed","2.500"]] }
+      ]
+    },
+    { id:"froid", label:"Boissons Froides", kicker:"Glacé", img:"img/menu/boissons-froides.jpg",
+      tagline:"Iced coffees, frappés, fresh juices, milkshakes and alcohol-free cocktails.",
+      groups:[
+        { title:"Ice Americano", items:[["ICE Americano","7.500"],["ICE Latte","8.200"],["ICE Macchiatto Moka","9.900"],["ICE Macchiatto Chocolate","9.900"],["ICE Macchiatto Caramel","9.900"],["ICE Macchiatto Toffee","9.900"]] },
+        { title:"Frappuccino", items:[["Tiramisu","11.700"],["Brownies","11.700"],["Cookies","11.700"],["Pop Corn","11.700"],["Noisettes grillées","11.700"],["Caramel salé","11.700"],["Speculoos","11.700"],["Chocolat Blanc","11.700"]] },
+        { title:"Cold Chocolate", items:[["Chocolat glacé","11.500"],["Chocolat liégeois","12.000"],["Chocolat glacé Coste","13.500"]] },
+        { title:"Limonades & Jus Frais", items:[["Citronnade à la menthe","9.300"],["Citronnade fraiche","8.900"],["Citronnade aux amandes","12.900"],["Boisson Gazeuse","7.600"],["BOGA (Menthe / Grenadine)","7.900"],["Fraise","9.900"],["Banane","12.500"],["Pêche","9.900"],["Orange","9.900"],["Ananas","9.900"]] },
+        { title:"Smoothie", items:[["Th Sun, Pina Colada, Choco-Ban","11.000"],["Mojito","12.900"]] },
+        { title:"Milkshakes", items:[["Fraise","12.900"],["Banane","12.900"],["Chocolat","12.900"],["Noisette","12.900"],["Vanille","12.900"],["2 parfums","14.400"],["Nutella","15.000"],["Nutella banane","16.000"],["Oreo","15.000"]] },
+        { title:"Cocktails Sans Alcool", items:[["Tropical Punch","14.000"],["Island Breeze","14.000"],["Sunset Bliss","14.000"],["Minty Mind","15.500"],["Sunny Berry","14.000"],["Cristal","13.500"],["Vamos","13.800"],["Iceberg","13.800"],["Space Toons","13.500"],["Bikini","13.500"],["Glory","13.500"],["Coste","14.500"],["Dreamer","13.500"]] },
+        { title:"Eaux & Glaces", items:[["Eau minérale 1L","5.900"],["Eau minérale 1/2 L","3.900"],["Eau gazéifiée","6.800"],["Sorbet citron / orange","10.900"],["Banana split","14.200"],["Chou chou","12.900"],["Coste","13.600"]] }
+      ]
+    },
+    { id:"gaufres", label:"Gaufres & Crêpes", kicker:"Sucré", img:"img/menu/gaufres-crepes.jpg",
+      tagline:"Waffles, crêpes and sweet treats, made to order.",
+      groups:[
+        { title:"Gaufres Sucrées", items:[["Gaufre au sucre","12.500"],["Gaufre chocolat","14.500"],["Gaufre chocolat banane","15.900"],["Gaufre chocolat amandes","15.900"],["Gaufre nutella","18.900"],["Gaufre Pistache Nutella","21.900"],["Gaufre nutella banane","19.900"],["Gaufre nutella amandes","19.900"],["Gaufre chocolat noisettes","15.900"],["Gaufre chocolat banane noisettes","17.900"],["Gaufre chocolat amandes noisettes","18.900"],["Gaufre nutella noisettes","19.900"],["Gaufre nutella banane noisettes","19.900"],["Gaufre Pistache","18.900"],["Gaufre glacé","13.900"]] },
+        { title:"Gaufres Salées", items:[["Gaufre fromage","11.900"],["Gaufre jambon fromage","14.500"],["Gaufre thon fromage","15.000"],["Gaufre bacon fromage","15.500"],["Gaufre Poulet pané","16.800"]] },
+        { title:"Nut Crêpes", items:[["Crêpe Kinder","15.400"],["Crêpe Amandino","16.400"],["Crêpe Speculoos","15.400"],["Crêpe Coste","16.900"],["Crêpe Oreo","15.400"],["Crêpe M&M's","15.400"],["Crêpe Rafaello","15.400"],["Crêpe Snickers","15.400"],["Crêpe Pistache","16.400"],["Crêpe Chocolat Dubai","16.400"]] },
+        { title:"Crêpes Sucrées", items:[["Crêpe au sucre","10.500"],["Crêpe au miel","10.900"],["Crêpe au chocolat","13.900"],["Crêpe chocolat banane","14.600"],["Crêpe chocolat amandes","14.600"],["Crêpe chocolat noisettes","14.600"],["Crêpe chocolat amande noisettes","16.600"],["Crêpe chocolat banane noisettes","16.600"],["Crêpe nutella","14.900"],["Crêpe nutella banane","16.900"],["Crêpe nutella amande","16.900"],["Crêpe nutella noisettes","16.900"],["Crêpe nutella banane noisettes","18.900"],["Crêpe nutella amande noisettes","18.900"],["Pancake Coste","16.400"]] },
+        { title:"Sweet Treats", items:[["Viennoiserie chaude","3.900"],["Tiramisu","13.900"],["Fondant au chocolat","12.900"],["Fondant chocolat noisettes","13.900"],["Cheese cake","14.900"]] }
+      ]
+    },
+    { id:"sale", label:"Salé", kicker:"Savoureux", img:"img/menu/sale.jpg",
+      tagline:"Crêpes, paninis, burgers, tacos and garden salads.",
+      groups:[
+        { title:"Crêpes Salées", items:[["Crêpe fromage","11.900"],["Crêpe thon","15.000"],["Crêpe jambon","15.000"],["Crêpe poulet champignon","15.900"],["Crêpe Coste","17.200"],["Crêpe pizza","15.600"],["Crêpe américaine","16.900"],["Crêpe Chorizo","15.000"],["Crêpe Océan","22.000"]] },
+        { title:"Omelettes", items:[["Omelette nature","8.900"],["Omelette fromage","9.900"],["Omelette thon fromage","11.500"],["Omelette jambon fromage","11.500"],["Omelette bacon","11.700"],["Omelette poulet champignons","11.900"],["Omelette végétarienne","11.700"]] },
+        { title:"Toasts", items:[["Norvégien","14.900"],["Italien","15.500"],["Tounsi","15.900"]] },
+        { title:"Panini", items:[["Panini fromage","12.100"],["Panini thon fromage","13.700"],["Panini jambon fromage","13.100"],["Panini poulet fromage","14.100"],["Panini tunisien","14.600"]] },
+        { title:"Sandwichs", items:[["Polo","14.900"],["Poulet panné","15.500"],["Américano","15.900"]] },
+        { title:"Burgers", items:[["La classique","15.500"],["Burger'in","16.700"],["Fils de Coste","18.600"],["Chiken burger","13.900"]] },
+        { title:"Tacos", items:[["Tacos Crispy","14.800"],["Tacos Poulet Grillé","14.300"],["Tacos Shawarma","14.300"],["Tacos viande hachée & bacon","15.800"]] },
+        { title:"Makloub", items:[["Al tonno","14.900"],["Tipico","14.900"],["Catalano","15.900"],["Escalope pannée","16.400"]] },
+        { title:"Baguette Farcie", items:[["Chicken'in","16.900"],["Chicken'in panné","17.700"],["L'américaine","18.600"]] },
+        { title:"Salades", items:[["Salade césar","19.000"],["Salade reine","19.700"],["Salade tonato","19.500"],["Salade niçoise","19.500"],["Salade tomate mozzarella","19.500"],["Salade mexicaine","23.000"],["Salade burrata bresaola","25.000"],["Salade norvégienne","26.000"],["Salade Coste","24.000"],["Salade de fruits","12.900"]] },
+        { title:"Menu Enfant", items:[["Nuggets, Pâtes, Frites, Jus","15.900"]] }
+      ]
+    },
+    { id:"plats", label:"Plats & Pizza", kicker:"La Table", img:"img/menu/plats-pizza.jpg",
+      tagline:"Escalopes, fresh pasta and wood-fire pizza.",
+      groups:[
+        { title:"Plats", items:[["Escalope grillée","24.500"],["Escalope panée","25.500"],["Escalope cordon bleu","26.500"],["Escalope à la crème","26.500"],["Escalope panée à la crème","27.000"],["Fajitas au poulet mexicain","26.000"],["Plat émincé de bœuf","32.000"],["Plat de Poisson","26.000"],["Escalope de poulet sauce fromage au four","25.000"],["Escalope farcie","26.000"]] },
+        { title:"Pasta", items:[["Tagliatelli poulet champignon","23.000"],["Tagliatelli saumon","26.000"],["Penne thon et olive","22.000"],["Lasagnes","19.900"],["Chicken pesto","22.300"],["Carbonara","21.500"],["Bolognaise","22.400"],["Penne aux boulettes","24.000"],["Gratin de pâtes à la viande émincée","27.000"],["Spaghetti gratinés au poulet pané","26.000"],["Penne 4 fromages","24.500"],["Penne aux poulet pané","25.000"]] },
+        { title:"Pizza", items:[["Marguerita","18.000"],["Tonato","22.000"],["Regina","21.000"],["Quatre fromages","25.500"],["Libanaise","25.500"],["Végétarienne","21.000"],["Tunisienne","22.000"],["Pepperoni","23.000"],["Norvégienne","27.000"],["4 saisons","24.000"],["Ricotta épinard","25.500"],["Anchois","22.500"],["Burrata","27.000"],["Mexicaine","26.000"],["Chicken BBQ","24.900"]] }
+      ]
+    }
+  ];
+
+  const menuTabs = $("#menuTabs"), menuPanels = $("#menuPanels");
+  if (menuTabs && menuPanels) {
+    const esc = (s) => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    const rowHtml = (it) =>
+      `<li class="menu2__row"><span class="menu2__name">${esc(it[0])}</span><span class="menu2__lead" aria-hidden="true"></span><span class="menu2__price">${esc(it[1])}</span></li>`;
+    const groupHtml = (g) =>
+      `<section class="menu2__group"><h4 class="menu2__group-title">${esc(g.title)}</h4><ul class="menu2__list">${g.items.map(rowHtml).join("")}</ul></section>`;
+
+    COSTE_MENU.forEach((cat, i) => {
+      const tab = document.createElement("button");
+      tab.className = "menu2__tab" + (i === 0 ? " is-active" : "");
+      tab.dataset.cat = cat.id;
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("data-cursor", "hover");
+      tab.textContent = cat.label;
+      menuTabs.appendChild(tab);
+
+      const panel = document.createElement("div");
+      panel.className = "menu2__panel" + (i === 0 ? " is-active" : "");
+      panel.dataset.cat = cat.id;
+      panel.setAttribute("role", "tabpanel");
+      const blocks = cat.groups.map(groupHtml);
+      if (cat.img) {
+        const photo = `<figure class="menu2__photo"><img src="${cat.img}" alt="${esc(cat.label)} — COSTE" loading="lazy" decoding="async" /></figure>`;
+        blocks.splice(Math.ceil(blocks.length / 2), 0, photo);   // nestle it mid-column
+      }
+      panel.innerHTML =
+        `<div class="menu2__panel-head">
+           <span class="menu2__panel-kicker">${esc(cat.kicker)}</span>
+           <h3>${esc(cat.label)}</h3>
+           ${cat.tagline ? `<p>${esc(cat.tagline)}</p>` : ""}
+         </div>
+         <div class="menu2__groups">${blocks.join("")}</div>`;
+      menuPanels.appendChild(panel);
+    });
+
+    menuTabs.addEventListener("click", (e) => {
+      const tab = e.target.closest(".menu2__tab");
+      if (!tab) return;
+      const cat = tab.dataset.cat;
+      $$(".menu2__tab", menuTabs).forEach(t => t.classList.toggle("is-active", t === tab));
+      $$(".menu2__panel", menuPanels).forEach(p => p.classList.toggle("is-active", p.dataset.cat === cat));
+      tab.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
     });
   }
 

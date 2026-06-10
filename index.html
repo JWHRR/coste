@@ -79,6 +79,13 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
     <a href="#host">Host an Event</a>
     <a href="#discover" data-i18n="nav-discover">Discover</a>
   </nav>
+  <div class="mobilemenu__lang" role="group" aria-label="Language">
+    <button class="nav__lang-btn is-active" data-lang="en">EN</button>
+    <span aria-hidden="true">|</span>
+    <button class="nav__lang-btn" data-lang="fr">FR</button>
+    <span aria-hidden="true">|</span>
+    <button class="nav__lang-btn" data-lang="ar">AR</button>
+  </div>
   <div class="mobilemenu__meta">
     <p>Sidi Bou Said, Tunisia</p>
     <p>Open daily · 08:00 — late</p>
@@ -217,52 +224,16 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
 </section>
 
 <!-- ░░░░░░░░░░░░░░ 2 · MENU (NEW MENU COMING SOON) ░░░░░░░░░░░░░░ -->
-<section class="menu menu--soon section" id="menu">
+<section class="menu section" id="menu">
   <div class="section__head">
     <p class="kicker reveal" data-i18n="menu-kicker">The Kitchen</p>
-    <h2 class="section__title reveal" data-i18n-html="menu-title">A new menu<br/>is being plated</h2>
+    <h2 class="section__title reveal" data-i18n-html="menu-title">The Coste<br/>menu</h2>
+    <p class="section__intro reveal">From sunrise breakfasts to golden-hour dinners — every plate, born of the Mediterranean and the Tunisian coast.<span class="menu2__note-inline">All prices in Tunisian Dinar (DT)</span></p>
   </div>
 
-  <div class="chef-preview menu-soon reveal">
-    <div class="menu-soon__glow" aria-hidden="true"></div>
-
-    <span class="menu-soon__badge"><i></i> <span>Chef's Preview</span></span>
-
-    <h3 class="menu-soon__title">A Mediterranean table,<br/>with a Tunisian soul.</h3>
-
-    <p class="menu-soon__lede">
-      Born where the sea meets the sun-bleached coast, our kitchen reads like a
-      love letter to the Mediterranean — sea-salt and saffron, charred citrus and
-      cold-pressed olive oil, jasmine carried in on the evening air. Slow fire,
-      honest produce, and the unhurried generosity of the Tunisian table.
-    </p>
-
-    <div class="chef-preview__teasers">
-      <article class="teaser">
-        <span class="teaser__index">01</span>
-        <h4 class="teaser__name">Saffron-Infused Seafood</h4>
-        <p class="teaser__desc">The morning's catch from the bay, kissed with saffron, fennel and a whisper of harissa.</p>
-      </article>
-      <article class="teaser">
-        <span class="teaser__index">02</span>
-        <h4 class="teaser__name">Jasmine &amp; Honey Pastries</h4>
-        <p class="teaser__desc">Flaky layers steeped in jasmine syrup and golden honey — the sweet close to every COSTE evening.</p>
-      </article>
-      <article class="teaser">
-        <span class="teaser__index">03</span>
-        <h4 class="teaser__name">Citrus &amp; Olive Mezze</h4>
-        <p class="teaser__desc">A slow-grazed spread of marinated olives, blistered peppers and bright citrus, made to share.</p>
-      </article>
-    </div>
-
-    <form class="chef-preview__optin" id="menuOptin">
-      <label for="menuOptinEmail" class="chef-preview__optin-label">Get the full menu first</label>
-      <div class="chef-preview__optin-row">
-        <input id="menuOptinEmail" name="email" type="email" required placeholder="your@email.com" autocomplete="email" data-cursor="hover" />
-        <button class="btn btn--solid" type="submit" data-cursor="hover">Notify me ↗</button>
-      </div>
-      <p class="leadform__status" aria-live="polite"></p>
-    </form>
+  <div class="menu2 reveal">
+    <div class="menu2__tabs" id="menuTabs" role="tablist" aria-label="Menu categories"></div>
+    <div class="menu2__panels" id="menuPanels"></div>
   </div>
 </section>
 
@@ -445,39 +416,6 @@ img{image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges}
     <div class="upcoming__grid" id="recentGrid"></div>
   </div>
 
-  <!-- ── REGULAR EVENTS ── -->
-  <div class="events__regular-head reveal">
-    <h3>Every week at COSTE</h3>
-  </div>
-
-  <div class="events__grid">
-    <article class="event reveal" data-cursor="hover">
-      <div class="event__media"><img src="img/terrassenuit.jpg" alt="COSTE terrace at night — Sunset Sessions" loading="lazy" decoding="async" /></div>
-      <div class="event__body">
-        <div class="event__meta"><span>Every Friday</span><span>·</span><span>18:00</span></div>
-        <h3>Sunset Sessions</h3>
-        <p>Resident selectors, golden-hour spritz and the terrace at its finest.</p>
-      </div>
-    </article>
-
-    <article class="event reveal" data-cursor="hover">
-      <div class="event__media"><img src="img/11.jpg" alt="COSTE Grand Brunch spread" loading="lazy" decoding="async" /></div>
-      <div class="event__body">
-        <div class="event__meta"><span>Weekends</span><span>·</span><span>11:00</span></div>
-        <h3>The Grand Brunch</h3>
-        <p>A generous Mediterranean table — croissants, crepes, charcuterie and live acoustic sound.</p>
-      </div>
-    </article>
-
-    <article class="event reveal" data-cursor="hover">
-      <div class="event__media"><img src="img/9.jpg" alt="COSTE intimate indoor evening" loading="lazy" decoding="async" /></div>
-      <div class="event__body">
-        <div class="event__meta"><span>Monthly</span><span>·</span><span>21:00</span></div>
-        <h3>Live Under the Stars</h3>
-        <p>Intimate live performances on the upper terrace, under the Sidi Bou Said night sky.</p>
-      </div>
-    </article>
-  </div>
 </section>
 
 <!-- ░░░░░░░░░░░░░░ 5 · HOSTING AN EVENT AT COSTE ░░░░░░░░░░░░░░ -->
