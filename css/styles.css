@@ -735,20 +735,35 @@ em{font-style:italic}
 
 /* ── Host an Event — clean single-column layout on phones & tablets ── */
 @media (max-width:900px){
-  #host .events__private{grid-template-columns:1fr;margin-top:1.5rem}
+  #host .events__private{grid-template-columns:1fr;margin-top:1.5rem;border-radius:16px}
   #host .events__private-media{order:-1;min-height:0;aspect-ratio:16/9}
-  #host .events__private-media img{transform:none!important}      /* no parallax over-zoom */
-  #host .events__private-body{padding:clamp(1.6rem,5vw,2.4rem)}
-  #host .events__private-body h2,#host .events__private-body h3{font-size:clamp(1.9rem,6vw,2.6rem);margin-bottom:1rem}
+  #host .events__private-media img{transform:none!important}
+  #host .events__private-body{padding:clamp(1.25rem,4vw,2.4rem)}
+  #host .events__private-body h2,#host .events__private-body h3{font-size:clamp(1.7rem,5.5vw,2.6rem);margin-bottom:1rem}
   #host .events__private-body>p:not(.kicker){margin-bottom:1.4rem}
-  #host .leadform{background:transparent;box-shadow:none;padding:0;margin-top:1.4rem!important}
-  /* card is removed on mobile, so give the fields visible boxes (otherwise
-     they read as empty underlines floating on the dark panel) */
-  #host .leadform .field input,#host .leadform .field textarea{
+  #host .leadform{background:transparent;box-shadow:none;padding:0;margin-top:1.2rem!important}
+  #host .leadform .field-row{grid-template-columns:1fr}
+  #host .leadform .field input,
+  #host .leadform .field textarea{
     border:1px solid var(--line);border-radius:10px;
     padding:.85rem 1rem;background:rgba(255,255,255,.05);
+    font-size:1rem;        /* prevents Android auto-zoom on focus */
+    width:100%;max-width:100%;box-sizing:border-box;
+    min-height:48px;       /* Google touch target minimum */
+    -webkit-appearance:none;appearance:none;
   }
-  #host .leadform .field input:focus,#host .leadform .field textarea:focus{border-color:var(--gold);background:rgba(255,255,255,.07)}
+  #host .leadform .field input:focus,
+  #host .leadform .field textarea:focus{border-color:var(--gold);background:rgba(255,255,255,.07)}
+  #host .leadform .btn{width:100%;justify-content:center;text-align:center}
+}
+
+/* ── Very small phones (360 px and below — Infinix Hot 10, Galaxy A series) ── */
+@media (max-width:480px){
+  #host .events__private{border-radius:12px;margin-top:1rem}
+  #host .events__private-body{padding:1.1rem}
+  #host .events__private-body h2{font-size:1.7rem}
+  #host .leadform .field input,
+  #host .leadform .field textarea{padding:.75rem .875rem}
 }
 
 @media (prefers-reduced-motion:reduce){
