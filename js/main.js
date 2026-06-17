@@ -95,9 +95,13 @@
     }
   };
 
+  const SINCE_LABELS = { en:"since 2008", fr:"depuis 2008", ar:"منذ 2008" };
+
   const applyLang = (lang) => {
     const dict = LANGS[lang];
     if (!dict) return;
+    const sinceEl = $("#preloaderSince");
+    if (sinceEl) sinceEl.textContent = SINCE_LABELS[lang] || "since 2008";
     $$("[data-i18n]").forEach(el => {
       if (dict[el.dataset.i18n] !== undefined) el.textContent = dict[el.dataset.i18n];
     });
@@ -122,6 +126,8 @@
 
   $$(".nav__lang-btn").forEach(b => b.addEventListener("click", () => applyLang(b.dataset.lang)));
   const _savedLang = sessionStorage.getItem("coste_lang");
+  const _sinceEl = $("#preloaderSince");
+  if (_sinceEl) _sinceEl.textContent = SINCE_LABELS[_savedLang] || "since 2008";
   if (_savedLang && _savedLang !== "en") applyLang(_savedLang);
 
   /* ================================================================
