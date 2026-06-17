@@ -402,7 +402,7 @@ Details: ${f.get("details") || "—"}`);
      Tunisian Dinar (the " DT" suffix is added in CSS).
      ================================================================ */
   const COSTE_MENU = [
-    { id:"petit-dej", label:"Petit Déjeuner", kicker:"Le Matin", img:"img/menu/petit-dejeuner.jpg",
+    { id:"petit-dej", label:"Petit Déjeuner", kicker:"Le Matin", imgs:["img/menu/petit-dejeuner.jpg","img/11.jpg"],
       tagline:"Slow mornings above the bay — formules, brunch and the first light.",
       groups:[
         { title:"Formules", items:[["L'artiste","9.300"],["L'architecte","11.800"],["L'amoureux","12.800"],["Le financier","11.800"],["Le manager","17.300"],["Coste","19.300"],["L'expert","21.200"]] },
@@ -410,7 +410,7 @@ Details: ${f.get("details") || "—"}`);
         { title:"À la carte", items:[["Healthy","23.900"],["Tunisien","23.000"],["Continental","25.900"],["L'Américain","23.900"]] }
       ]
     },
-    { id:"chaud", label:"Boissons Chaudes", kicker:"Chaud", img:"img/menu/boissons-chaudes.jpg",
+    { id:"chaud", label:"Boissons Chaudes", kicker:"Chaud", imgs:["img/menu/boissons-chaudes.jpg","img/7.png"],
       tagline:"Single-origin coffee, signature lattes, teas and hot chocolate.",
       groups:[
         { title:"Classique", items:[["Express","6.500"],["Cappucin","6.800"],["Café crème","7.200"],["Americain","6.900"],["Café turc","8.800"],["Nescafé au lait","7.200"]] },
@@ -419,7 +419,7 @@ Details: ${f.get("details") || "—"}`);
         { title:"Thés & Chicha", items:[["Thé marocain","6.500"],["Supplément amandes","5.800"],["Thé aux pignons","14.900"],["Thé infusion","8.500"],["Thé infusion Lipton","9.800"],["Chicha","20.000"],["Chicha Glacon","24.500"],["Supplément jabbed","2.500"]] }
       ]
     },
-    { id:"froid", label:"Boissons Froides", kicker:"Glacé", img:"img/menu/boissons-froides.jpg",
+    { id:"froid", label:"Boissons Froides", kicker:"Glacé", imgs:["img/menu/boissons-froides.jpg","img/2.jpg"],
       tagline:"Iced coffees, frappés, fresh juices, milkshakes and alcohol-free cocktails.",
       groups:[
         { title:"Ice Americano", items:[["ICE Americano","7.500"],["ICE Latte","8.200"],["ICE Macchiatto Moka","9.900"],["ICE Macchiatto Chocolate","9.900"],["ICE Macchiatto Caramel","9.900"],["ICE Macchiatto Toffee","9.900"]] },
@@ -432,7 +432,7 @@ Details: ${f.get("details") || "—"}`);
         { title:"Eaux & Glaces", items:[["Eau minérale 1L","5.900"],["Eau minérale 1/2 L","3.900"],["Eau gazéifiée","6.800"],["Sorbet citron / orange","10.900"],["Banana split","14.200"],["Chou chou","12.900"],["Coste","13.600"]] }
       ]
     },
-    { id:"gaufres", label:"Gaufres & Crêpes", kicker:"Sucré", img:"img/menu/gaufres-crepes.jpg",
+    { id:"gaufres", label:"Gaufres & Crêpes", kicker:"Sucré", imgs:["img/menu/gaufres-crepes.jpg","img/3.jpg"],
       tagline:"Waffles, crêpes and sweet treats, made to order.",
       groups:[
         { title:"Gaufres Sucrées", items:[["Gaufre au sucre","12.500"],["Gaufre chocolat","14.500"],["Gaufre chocolat banane","15.900"],["Gaufre chocolat amandes","15.900"],["Gaufre nutella","18.900"],["Gaufre Pistache Nutella","21.900"],["Gaufre nutella banane","19.900"],["Gaufre nutella amandes","19.900"],["Gaufre chocolat noisettes","15.900"],["Gaufre chocolat banane noisettes","17.900"],["Gaufre chocolat amandes noisettes","18.900"],["Gaufre nutella noisettes","19.900"],["Gaufre nutella banane noisettes","19.900"],["Gaufre Pistache","18.900"],["Gaufre glacé","13.900"]] },
@@ -442,7 +442,7 @@ Details: ${f.get("details") || "—"}`);
         { title:"Sweet Treats", items:[["Viennoiserie chaude","3.900"],["Tiramisu","13.900"],["Fondant au chocolat","12.900"],["Fondant chocolat noisettes","13.900"],["Cheese cake","14.900"]] }
       ]
     },
-    { id:"sale", label:"Salé", kicker:"Savoureux", img:"img/menu/sale.jpg",
+    { id:"sale", label:"Salé", kicker:"Savoureux", imgs:["img/menu/sale.jpg","img/6.jpg"],
       tagline:"Crêpes, paninis, burgers, tacos and garden salads.",
       groups:[
         { title:"Crêpes Salées", items:[["Crêpe fromage","11.900"],["Crêpe thon","15.000"],["Crêpe jambon","15.000"],["Crêpe poulet champignon","15.900"],["Crêpe Coste","17.200"],["Crêpe pizza","15.600"],["Crêpe américaine","16.900"],["Crêpe Chorizo","15.000"],["Crêpe Océan","22.000"]] },
@@ -458,7 +458,7 @@ Details: ${f.get("details") || "—"}`);
         { title:"Menu Enfant", items:[["Nuggets, Pâtes, Frites, Jus","15.900"]] }
       ]
     },
-    { id:"plats", label:"Plats & Pizza", kicker:"La Table", img:"img/menu/plats-pizza.jpg",
+    { id:"plats", label:"Plats & Pizza", kicker:"La Table", imgs:["img/menu/plats-pizza.jpg","img/13.jpg"],
       tagline:"Escalopes, fresh pasta and wood-fire pizza.",
       groups:[
         { title:"Plats", items:[["Escalope grillée","24.500"],["Escalope panée","25.500"],["Escalope cordon bleu","26.500"],["Escalope à la crème","26.500"],["Escalope panée à la crème","27.000"],["Fajitas au poulet mexicain","26.000"],["Plat émincé de bœuf","32.000"],["Plat de Poisson","26.000"],["Escalope de poulet sauce fromage au four","25.000"],["Escalope farcie","26.000"]] },
@@ -490,10 +490,13 @@ Details: ${f.get("details") || "—"}`);
       panel.dataset.cat = cat.id;
       panel.setAttribute("role", "tabpanel");
       const blocks = cat.groups.map(groupHtml);
-      if (cat.img) {
-        const photo = `<figure class="menu2__photo"><img src="${cat.img}" alt="${esc(cat.label)} — COSTE" loading="lazy" decoding="async" /></figure>`;
-        blocks.splice(Math.ceil(blocks.length / 2), 0, photo);   // nestle it mid-column
-      }
+      const imgs = cat.imgs || (cat.img ? [cat.img] : []);
+      imgs.slice().reverse().forEach((src, ri) => {
+        const i = imgs.length - 1 - ri;
+        const pos = Math.round((i + 1) * blocks.length / (imgs.length + 1));
+        const photo = `<figure class="menu2__photo"><img src="${src}" alt="${esc(cat.label)} — COSTE" loading="lazy" decoding="async" /></figure>`;
+        blocks.splice(pos, 0, photo);
+      });
       panel.innerHTML =
         `<div class="menu2__panel-head">
            <span class="menu2__panel-kicker">${esc(cat.kicker)}</span>
