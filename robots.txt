@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /presentation.html
+Disallow: /devis.html
+Allow: /
+
+Sitemap: https://www.costecofferestau.com/sitemap.xml
