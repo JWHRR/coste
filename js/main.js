@@ -213,6 +213,26 @@
   $$(".manifesto__text").forEach(el => wio.observe(el));
 
   /* ================================================================
+     SCROLL-TRIGGERED VIDEO PLAYBACK
+     Ambient clips play while in view and pause when scrolled away —
+     saves bandwidth/battery and respects reduced-motion users.
+     ================================================================ */
+  const scrollVideos = $$(".js-scroll-video");
+  if (scrollVideos.length) {
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduceMotion) {
+      const vio = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          const v = en.target;
+          if (en.isIntersecting) v.play().catch(() => {});
+          else v.pause();
+        });
+      }, { threshold: 0.35 });
+      scrollVideos.forEach(v => vio.observe(v));
+    }
+  }
+
+  /* ================================================================
      PARALLAX
      ================================================================ */
   const parallaxEls = $$("[data-parallax] img, [data-parallax]");
