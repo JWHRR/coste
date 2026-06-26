@@ -213,26 +213,6 @@
   $$(".manifesto__text").forEach(el => wio.observe(el));
 
   /* ================================================================
-     SCROLL-TRIGGERED VIDEO PLAYBACK
-     Ambient clips play while in view and pause when scrolled away —
-     saves bandwidth/battery and respects reduced-motion users.
-     ================================================================ */
-  const scrollVideos = $$(".js-scroll-video");
-  if (scrollVideos.length) {
-    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduceMotion) {
-      const vio = new IntersectionObserver((entries) => {
-        entries.forEach(en => {
-          const v = en.target;
-          if (en.isIntersecting) v.play().catch(() => {});
-          else v.pause();
-        });
-      }, { threshold: 0.35 });
-      scrollVideos.forEach(v => vio.observe(v));
-    }
-  }
-
-  /* ================================================================
      PARALLAX
      ================================================================ */
   const parallaxEls = $$("[data-parallax] img, [data-parallax]");
@@ -428,7 +408,7 @@ Details: ${f.get("details") || "—"}`);
      Tunisian Dinar (the " DT" suffix is added in CSS).
      ================================================================ */
   const COSTE_MENU = [
-    { id:"petit-dej", label:"Petit Déjeuner", kicker:"Le Matin", imgs:["img/menu/petit-dejeuner.jpg","img/11.jpg"],
+    { id:"petit-dej", label:"Petit Déjeuner", kicker:"Le Matin", imgs:["img/menu/petit-dejeuner.jpg",{ video:"vid/brunch.mp4", poster:"img/11.jpg" }],
       tagline:"Slow mornings above the bay — formules, brunch and the first light.",
       groups:[
         { title:"Formules", items:[["L'artiste","9.300"],["L'architecte","11.800"],["L'amoureux","12.800"],["Le financier","11.800"],["Le manager","17.300"],["Coste","19.300"],["L'expert","21.200"]] },
@@ -520,7 +500,11 @@ Details: ${f.get("details") || "—"}`);
       imgs.slice().reverse().forEach((src, ri) => {
         const i = imgs.length - 1 - ri;
         const pos = Math.round((i + 1) * blocks.length / (imgs.length + 1));
-        const photo = `<figure class="menu2__photo"><img src="${src}" alt="${esc(cat.label)} — COSTE" loading="lazy" decoding="async" /></figure>`;
+        const isVideo = typeof src === "object";
+        const media = isVideo
+          ? `<video class="js-scroll-video" muted loop playsinline preload="none" poster="${src.poster}" aria-label="${esc(cat.label)} — COSTE"><source src="${src.video}" type="video/mp4" /></video>`
+          : `<img src="${src}" alt="${esc(cat.label)} — COSTE" loading="lazy" decoding="async" />`;
+        const photo = `<figure class="menu2__photo${isVideo ? " menu2__photo--video" : ""}">${media}</figure>`;
         blocks.splice(pos, 0, photo);
       });
       panel.innerHTML =
@@ -541,6 +525,27 @@ Details: ${f.get("details") || "—"}`);
       $$(".menu2__panel", menuPanels).forEach(p => p.classList.toggle("is-active", p.dataset.cat === cat));
       tab.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
     });
+  }
+
+  /* ================================================================
+     SCROLL-TRIGGERED VIDEO PLAYBACK
+     Ambient clips play while in view and pause when scrolled away —
+     saves bandwidth/battery and respects reduced-motion users.
+     Runs after menu render so dynamically-inserted menu videos are included.
+     ================================================================ */
+  const scrollVideos = $$(".js-scroll-video");
+  if (scrollVideos.length) {
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduceMotion) {
+      const vio = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          const v = en.target;
+          if (en.isIntersecting) v.play().catch(() => {});
+          else v.pause();
+        });
+      }, { threshold: 0.35 });
+      scrollVideos.forEach(v => vio.observe(v));
+    }
   }
 
   /* ================================================================
